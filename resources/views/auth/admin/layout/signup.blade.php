@@ -10,7 +10,7 @@
   <link href="css/variables.style.css" rel="stylesheet">
   <link href="css/auth.style.css" rel="stylesheet">
   <link href="css/components.style.css" rel="stylesheet">
-  <title>Sign In - Pertemuan 2</title>
+  <title>Sign Up - Admin</title>
 </head>
 @include('layouts.customer.auth.register.component.content')
 </html>
