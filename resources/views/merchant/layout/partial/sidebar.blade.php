@@ -5,12 +5,15 @@
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">Merchant Panel <sup>Digi mikro</sup></div>
+                <div class="sidebar-brand-text mx-3">
+                    {{ request()->is('merchant/merchant-panel*') ? 'Merchant Panel ' : 'Admin Panel'  }}
+                    <br><sub>digimikro</sub>
+                </div>
+
             </a>
 
             <!-- Divider -->
@@ -27,8 +30,9 @@
             <hr class="sidebar-divider">
 
             <!-- Heading -->
+
             <div class="sidebar-heading">
-                kegiatan
+                {{ request()->is('/merchant/merchant-panel') ? 'kegiatan' : 'Menu diklat usaha' }}
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -40,7 +44,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/admin-panel/add-seminar-event">daftar kegiatan</a>
+                        <a class="collapse-item" href={{route('admin.event')}}>daftar kegiatan</a>
                     </div>
                 </div>
             </li>
@@ -56,8 +60,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Jadwal Seminar</h6>
-                        <a class="collapse-item" href="admin-panel/event">Jadwal Seminar</a>
-                        <a class="collapse-item" href="admin-panel/add-seminar-event">Tambah Jadwal Seminar</a>
+                        <a class="collapse-item" href={{route("admin.seminar-event")}}>Jadwal Seminar</a>
+                        <a class="collapse-item" href={{route("admin.add-seminar-event")}}>Tambah Jadwal Seminar</a>
                     </div>
                 </div>
             </li>
@@ -71,9 +75,15 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="admin-panel/digimikro-daftar">pendaftaran digimikro</a>
+                        <a class="collapse-item" href={{route("admin.digimikro-daftar")}}>pendaftaran digimikro</a>
                     </div>
                 </div>
+            </li>
+               <!-- Nav Item - Tables -->
+               <li class="nav-item">
+                <a class="nav-link" href={{ route("admin.add-merchant") }}>
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Daftar merchant</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->
