@@ -60,10 +60,20 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+        'admins'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Admin\Admin::class,
+         ],
+
+         'customers'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Customer\Customer::class,
+         ],
+
+         'merchants'=>[
+            'driver'=>'eloquent',
+            'model'=>App\Models\Merchant\Merchant::class,
+         ],
 
         // 'users' => [
         //     'driver' => 'database',
@@ -91,8 +101,20 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'admins' => [
+            'provider' => 'admins',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'merchants' => [
+            'provider' => 'merchants',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'customers' => [
+            'provider' => 'customers',
             'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
