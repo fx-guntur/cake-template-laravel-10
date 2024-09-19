@@ -1,5 +1,5 @@
-@extends('layouts.common.adminPanelHeader')
+@extends('admin.layout.partial.master')
 @section('title', 'Admin Panel')
 @section('content')
-@include('layouts.admin.panel.digimikro-daftar.component.digimikro-daftar')
+@include('admin.layout.partial.digimikro-daftar.digimikro-daftar')
 @endsection

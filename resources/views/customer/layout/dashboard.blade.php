@@ -1,0 +1,13 @@
+@extends('customer.layout.partial.master')
+@section('title', 'Halaman Home')
+@section('content')
+@include('customer.contetnt.home.HeroStart')
+@include('customer.contetnt.home.FeatursSection')
+@include('customer.contetnt.home.FruitsShop')
+@include('customer.contetnt.home.Featurs')
+@include('customer.contetnt.home.VesitableShop')
+@include('customer.contetnt.home.BannerSection')
+@include('customer.contetnt.home.BestsalerProduct')
+@include('customer.contetnt.home.Fact')
+@include('customer.contetnt.home.Tastimonial')
+@endsection

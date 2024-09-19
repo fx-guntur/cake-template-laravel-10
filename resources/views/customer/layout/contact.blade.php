@@ -1,5 +1,5 @@
-@extends('layouts.common.master')
+@extends('customer.layout.partial.master')
 @section('title', 'Contact')
 @section('content')
-@include('layouts.customer.contact.component.Contact')
+@include('customer.partial.contact.Contact')
 @endsection

@@ -12,5 +12,5 @@
   <link href={{ asset('css/components.style.css') }} rel="stylesheet">
   <title>Sign Up - user</title>
 </head>
-@include('layouts.customer.auth.register.component.content')
+@include('auth.customer.content.content.signup.content')
 </html>

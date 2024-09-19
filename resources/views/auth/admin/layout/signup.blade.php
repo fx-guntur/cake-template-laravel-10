@@ -12,5 +12,5 @@
   <link href="css/components.style.css" rel="stylesheet">
   <title>Sign Up - Admin</title>
 </head>
-@include('layouts.customer.auth.register.component.content')
+@include('auth.admin.register.content')
 </html>

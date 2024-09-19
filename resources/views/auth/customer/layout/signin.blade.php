@@ -12,7 +12,7 @@
   <link href="{{ asset('css/variables.style.css') }}" rel="stylesheet">
 <link href="{{ asset('css/auth.style.css') }}" rel="stylesheet">
 <link href="{{ asset('css/components.style.css') }}" rel="stylesheet">
-  <title>Sign In - user</title>
+  <title>Sign In - customer</title>
 </head>
-@include('layouts.customer.auth.login.component.content')
+@include('auth.customer.content.content.login.content')
 </html>
