@@ -1,5 +1,5 @@
-@extends('layouts.common.merchantPanelHeader')
+@extends('customer.layout.partial.master')
 @section('title', 'MerchantPanel')
 @section('content')
-@include('layouts.merchant.panel.component.dashboardPage')
+@include('merchant.content.panel.merchantPanel')
 @endsection

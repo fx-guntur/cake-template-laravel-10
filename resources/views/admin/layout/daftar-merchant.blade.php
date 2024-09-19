@@ -1,5 +1,5 @@
-@extends('layouts.common.adminPanelHeader')
+@extends('admin.layout.partial.master')
 @section('title', 'Admin Panel')
 @section('content')
-@include('layouts.admin.panel.daftar-merchant.component.daftar-merchantPage')
+@include('admin.content.daftar-merchantPage.daftar-merchantPage')
 @endsection

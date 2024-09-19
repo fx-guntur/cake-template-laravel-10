@@ -1,5 +1,5 @@
-@extends('layouts.common.master')
+@extends('customer.layout.partial.master')
 @section('title', 'Checkout')
 @section('content')
-@include('layouts.customer.checkout.component.CheckoutPage')
+@include('customer.content.checkout.CheckoutPage')
 @endsection

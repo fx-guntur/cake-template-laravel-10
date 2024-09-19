@@ -1,5 +1,5 @@
-@extends('layouts.common.master')
+@extends('customer.layout.partial.master')
 @section('title', 'Testimonial')
 @section('content')
-@include('layouts.customer.testimonial.component.Testimonial')
+@include('customer.content.testimonial.Testimonial')
 @endsection

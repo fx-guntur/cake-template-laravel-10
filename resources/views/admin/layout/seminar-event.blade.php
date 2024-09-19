@@ -1,5 +1,5 @@
-@extends('layouts.common.adminPanelHeader')
+@extends('admin.layout.partial.master')
 @section('title', 'Admin Panel')
 @section('content')
-@include('layouts.admin.panel.seminar-event.component.seminar-event')
+@include('admin.layout.panel.seminar-event.seminar-event')
 @endsection

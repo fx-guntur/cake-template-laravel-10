@@ -12,5 +12,5 @@
   <link href="css/components.style.css" rel="stylesheet">
   <title>Sign up - merchant</title>
 </head>
-@include('layouts.customer.auth.register.component.content')
+@include('auth.merchant.content.content.register.content')
 </html>

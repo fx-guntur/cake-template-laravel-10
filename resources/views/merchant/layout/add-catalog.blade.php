@@ -1,5 +1,5 @@
-@extends('layouts.common.master_admin')
+@extends('customer.layout.partial.master')
 @section('title', 'Admin')
 @section('content')
-@include('layouts.merchant.form.component.MainContent')
+@include('merchant.content.form.add-catalog')
 @endsection
