@@ -14,5 +14,5 @@
 <link href="{{ asset('css/components.style.css') }}" rel="stylesheet">
   <title>Sign In - Admin</title>
 </head>
-@include('auth.admin.login.content')
+@include('auth.admin.content.login.content')
 </html>

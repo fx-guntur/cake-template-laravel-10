@@ -16,11 +16,20 @@
                 <h1>Sign In</h1>
                 <p>Persiapkan diri untuk masa depan yang penuh dengan bintang</p>
             </div>
-            <form action="{{ route('admin.login.store') }}" method="POST">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>   
+                </div>
+            @endif
+            <form action="{{ route('admin.auth.store') }}" method="POST">
                 @csrf
                 <div class="input-group border-primary">
-                    <label for="identifier">Username </label>
-                    <input type="text" class="placeholder-primary" id="username" name="identifier"
+                    <label for="username">Username</label>
+                    <input type="text" class="placeholder-primary" id="username" name="username"
                         placeholder="Your Username" required>
                 </div>
 
@@ -66,7 +75,7 @@
         const eyeIcon = document.getElementById('eyeIcon');
         const passwordInput = document.getElementById('password');
 
-        eyeIcon.addEventListener('click', function () {
+        eyeIcon.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             this.textContent = type === 'text' ? '🙈' : '👁';
@@ -82,7 +91,8 @@
 
         .input-password-wrapper input {
             width: 100%;
-            padding-right: 40px; /* Memberi ruang untuk ikon di sebelah kanan */
+            padding-right: 40px;
+            /* Memberi ruang untuk ikon di sebelah kanan */
         }
 
         .toggle-password {

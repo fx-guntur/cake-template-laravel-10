@@ -1,17 +1,14 @@
 <?php
-
 namespace App\Models\Admin;
 
-use Illuminate\Auth\Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Hash;
 
-class Admin extends Model implements AuthenticatableContract
+class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable, Authenticatable;
+    use HasFactory, Notifiable;
 
     protected $table = 'admin'; // Specify the table name if different
 
@@ -28,10 +25,12 @@ class Admin extends Model implements AuthenticatableContract
         'password',
         'raw_password', // Hide sensitive information
     ];
+
     // Mutator for encrypting password
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
     }
-    // Optionally, you can define relationships and other model methods here
 }
+
+?>
