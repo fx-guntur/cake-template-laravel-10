@@ -166,8 +166,11 @@
                                             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Activity Log
                                         </a>
+                                        <form id="logout-form" action="{{ route('merchant.auth.logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('admin.auth.logout') }}" data-toggle="modal" data-target="#logoutModal">
+                                        <a class="dropdown-item" href="{{ route('merchant.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit(); data-toggle="modal" data-target="#logoutModal">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Logout
                                         </a>
