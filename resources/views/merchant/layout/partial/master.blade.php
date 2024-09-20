@@ -22,7 +22,7 @@
 
 </head>
 <body id="page-top">
-    @include('layouts.common.adminPanelNav')
+    @include('merchant.layout.partial.sidebar')
 
     @yield('content')
 

@@ -44,7 +44,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href={{route('admin.event')}}>Lihat semua produk</a>
+                        <a class="collapse-item" href={{route('admin.event.index')}}>Lihat semua produk</a>
                     </div>
                 </div>
             </li>
@@ -59,7 +59,7 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href={{route("admin.seminar-event")}}>Lihat daftar transaksi</a>
+                        <a class="collapse-item" href={{route("admin.seminar-event.index")}}>Lihat daftar transaksi</a>
                     </div>
                 </div>
             </li>
@@ -73,13 +73,13 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href={{route("admin.digimikro-daftar")}}>pendaftaran digimikro</a>
+                        {{-- <a class="collapse-item" href={{route("admin.digimikro-daftar")}}>pendaftaran digimikro</a> --}}
                     </div>
                 </div>
             </li>
                <!-- Nav Item - Tables -->
                <li class="nav-item">
-                <a class="nav-link" href={{ route("admin.add-merchant") }}>
+                {{-- <a class="nav-link" href={{ route("admin.add-merchant") }}> --}}
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Daftar merchant</span></a>
             </li>
@@ -167,7 +167,7 @@
                                             Activity Log
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('admin.logout') }}" data-toggle="modal" data-target="#logoutModal">
+                                        <a class="dropdown-item" href="{{ route('admin.auth.logout') }}" data-toggle="modal" data-target="#logoutModal">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                             Logout
                                         </a>
