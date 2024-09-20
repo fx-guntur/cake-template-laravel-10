@@ -4,20 +4,12 @@ namespace App\Http\Controllers\Merchant\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -25,7 +17,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo;
 
     /**
      * Create a new controller instance.
@@ -35,6 +27,114 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+        $this->redirectTo = route('merchant.dashboard'); // Redirect to merchant dashboard after login
+    }
+
+    /**
+     * Show the login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('auth.merchant.layout.signin'); // Return the login view
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     */
+    public function login(Request $request)
+    {
+        // Validate the login request
+        $request->validate([
+            'login' => 'required|string', // Updated to a single field for login
+            'password' => 'required|min:5|max:30',
+        ]);
+
+        // Check if the user is already authenticated
+        if (Auth::guard('merchant')->check()) {
+            return redirect()->route('merchant.dashboard')->with('success', 'Login successful!');
+        }
+
+        // Check for too many login attempts
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
+
+        // Attempt to log the user in with either username or email
+        $credentials = $this->credentials($request);
+        if (Auth::guard('merchant')->attempt($credentials)) {
+            $this->clearLoginAttempts($request); // Clear attempts on successful login
+            return $this->sendLoginResponse($request);
+        }
+
+        // Increment login attempts on failure
+        $this->incrementLoginAttempts($request);
+        return $this->sendFailedLoginResponse($request);
+    }
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function logout(Request $request)
+    {
+        $this->guard()->logout(); // Log the user out
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate CSRF token
+
+
+        return $this->loggedOut($request) ?: redirect()->route('merchant.auth.login'); // Redirect after logout
+    }
+
+    /**
+     * Get the needed authorization credentials from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array
+     */
+    protected function credentials(Request $request)
+    {
+        $field = $this->field($request); // Determine the login field
+
+        return [
+            $field => $request->get('login'), // Use the single login field
+            'password' => $request->get('password'), // Get the password
+        ];
+    }
+
+    /**
+     * Determine the login field (username).
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return string
+     */
+    public function field(Request $request)
+    {
+        // Check if the input is an email
+        return filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+    }
+
+    
+    /**
+     * Get the failed login response instance.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => ['Data terkait tidak cocok dengan data yang kami miliki.'], // Custom error message
+        ]);
     }
 }

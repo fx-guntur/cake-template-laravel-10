@@ -30,12 +30,12 @@
     </head>
 
 <body>
-@include('layouts.common.header')
+@include('customer.layout.partial.navbar')
 
 @yield('content')
 
 {{-- @stack('scripts') --}}
-@include('layouts.common.footer')
+@include('customer.layout.partial.footer')
 </body>
 
 <!-- JavaScript Libraries -->

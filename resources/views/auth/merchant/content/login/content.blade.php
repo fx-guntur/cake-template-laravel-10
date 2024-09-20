@@ -16,14 +16,16 @@
                 <h1>Sign In</h1>
                 <p>Persiapkan diri untuk masa depan yang penuh dengan bintang</p>
             </div>
-            <form action="{{ route('merchant.login.store') }}" method="POST">
+            <form action="{{ route('merchant.auth.login') }}" method="POST">
                 @csrf
                 <div class="input-group border-primary">
-                    <label for="text">Username</label>
-                    <input type="text" class="placeholder-primary" id="username" name="identifier" placeholder="Your username" required>
+                    <label for="login">Username or Email</label>
+                    <input type="text" class="placeholder-primary" id="login" name="login"
+                        placeholder="Your Username or Email" required>
                 </div>
-                 <!-- Input Password dengan Icon Mata -->
-                 <div class="input-group border-primary">
+
+                <!-- Input Password dengan Icon Mata -->
+                <div class="input-group border-primary">
                     <label for="password">Password</label>
                     <div class="input-password-wrapper">
                         <input type="password" class="placeholder-primary" id="password" name="password"
@@ -39,7 +41,7 @@
         </section>
     </main>
 
-        @if(session('success'))
+    @if (session('success'))
         <script>
             window.onload = function() {
                 swal("Success", "Test Success Message", "success");
@@ -47,7 +49,7 @@
         </script>
     @endif
 
-    @if(session('error'))
+    @if (session('error'))
         <script>
             window.onload = function() {
                 swal("Error", "Test Error Message", "error");
@@ -63,7 +65,7 @@
         const eyeIcon = document.getElementById('eyeIcon');
         const passwordInput = document.getElementById('password');
 
-        eyeIcon.addEventListener('click', function () {
+        eyeIcon.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
             this.textContent = type === 'text' ? '🙈' : '👁';
@@ -79,7 +81,8 @@
 
         .input-password-wrapper input {
             width: 100%;
-            padding-right: 40px; /* Memberi ruang untuk ikon di sebelah kanan */
+            padding-right: 40px;
+            /* Memberi ruang untuk ikon di sebelah kanan */
         }
 
         .toggle-password {

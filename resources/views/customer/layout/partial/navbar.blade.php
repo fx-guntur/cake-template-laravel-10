@@ -19,7 +19,14 @@
             <div class="top-link pe-2">
                 <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
                 <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                <a href="{{ route('customer.logout') }}" class="text-white"><small class="text-white ms-2">Logout</small></a>
+
+                <!-- Logout Form -->
+                <form id="logout-form" action="{{ route('merchant.auth.logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+                <a href="{{ route('merchant.auth.logout') }}" class="text-white"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><small
+                        class="text-white ms-2">Logout</small></a>
             </div>
         </div>
     </div>
@@ -50,28 +57,30 @@
                                 Page</a>
                         </div>
                     </div>
-                    <a href="/contact"
+                    <a href="{{ route('customer.contact.index') }}"
                         class="nav-item nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact</a>
                 </div>
                 <div class="d-flex m-3 me-0">
                     <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                         data-bs-toggle="modal" data-bs-target="#searchModal"><i
                             class="fas fa-search text-primary"></i></button>
-                    <a href="checkout" class="position-relative me-4 my-auto">
+                    <a href="{{ route('customer.checkout.index') }}" class="position-relative me-4 my-auto">
                         <i class="fa fa-shopping-bag fa-2x"></i>
                         <span
                             class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                             style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
-                    <a href="{{ route('customer.profile') }}" class="my-auto" id="userMenuButton">
+                    <a href="{{ route('customer.profile.index') }}" class="my-auto" id="userMenuButton">
                         <i class="fas fa-user fa-2x"></i>
                     </a>
 
                     <!-- Menu Popup -->
                     <div id="userMenuPopup" class="popup-menu" style="display: none;">
                         <ul>
-                            <li><a href="{{ route('customer.profile') }}">Lihat Profil</a></li>
-                            <li><a href="{{ route('customer.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a></li>
+                            <li><a href="{{ route('customer.profile.index') }}">Lihat Profil</a></li>
+                            <li><a href="{{ route('customer.auth.logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                            </li>
                         </ul>
                     </div>
 

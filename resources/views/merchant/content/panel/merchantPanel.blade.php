@@ -9,8 +9,12 @@
         </nav>
     </div><!-- End Page Title -->
 
+    <form id="logout-form" action="{{ route('customer.auth.logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+
     <div class="row justify-content-end m-2 px-5 ">
-        <a href="{{ route('merchant.logout') }}" style="width: 150px; background-color: #82c408ff; color: white;" class="btn">
+        <a href="{{ route('customer.auth.logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit(); style="width: 150px; background-color: #82c408ff; color: white;" class="btn">
             Logout
         </a>
     </div>

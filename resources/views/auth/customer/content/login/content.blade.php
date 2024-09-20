@@ -16,12 +16,12 @@
                 <h1>Sign In</h1>
                 <p>Persiapkan diri untuk masa depan yang penuh dengan bintang</p>
             </div>
-            <form action="{{ route('customer.login.store') }}" method="POST">
+            <form action="{{ route('customer.auth.login') }}" method="POST">
                 @csrf
                 <div class="input-group border-primary">
-                    <label for="identifier">Username or Email</label>
-                    <input type="text" class="placeholder-primary" id="username" name="identifier"
-                        placeholder="Your Username" required>
+                    <label for="login">Username or Email</label>
+                    <input type="text" class="placeholder-primary" id="login" name="login"
+                        placeholder="Your Username or Email" required>
                 </div>
 
                 <!-- Input Password dengan Icon Mata -->
