@@ -59,7 +59,7 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Jadwal Seminar</h6>
-                    <a class="collapse-item" href={{ route('admin.add-seminar-event.index') }}>Jadwal Seminar</a>
+                    <a class="collapse-item" href={{ route('admin.event.index') }}>Jadwal Seminar</a>
                     <a class="collapse-item" href={{ route('admin.add-seminar-event.index') }}>Tambah Jadwal Seminar</a>
                 </div>
             </div>
