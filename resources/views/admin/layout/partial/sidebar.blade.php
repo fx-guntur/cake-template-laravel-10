@@ -39,11 +39,11 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                 aria-expanded="true" aria-controls="collapseTwo">
                 <i class="fas fa-chalkboard-teacher"></i>
-                <span>Update Kegiatan</span>
+                <span>Daftar Merchant</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.event.index') }}>daftar kegiatan</a>
+                    <a class="collapse-item" href={{ route('admin.event.index') }}>Lihat Daftar Merchant</a>
                 </div>
             </div>
         </li>
@@ -53,14 +53,13 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
                 aria-expanded="true" aria-controls="collapseUtilities">
                 <i class="fas fa-calendar-day"></i>
-                <span>Seminar</span>
+                <span>Daftar Transaksi</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Jadwal Seminar</h6>
-                    <a class="collapse-item" href={{ route('admin.event.index') }}>Jadwal Seminar</a>
-                    <a class="collapse-item" href={{ route('admin.add-seminar-event.index') }}>Tambah Jadwal Seminar</a>
+
+                    <a class="collapse-item" href={{ route('admin.event.index') }}>Lihat Daftar Transaksi</a>
                 </div>
             </div>
         </li>
@@ -70,12 +69,11 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-calendar-day"></i>
-                <span>Pendaftaran Digimicro</span>
+                <span>Daftar Konsumen</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.register-digimikro.index') }}>pendaftaran
-                        digimikro</a>
+                    <a class="collapse-item" href={{ route('admin.register-digimikro.index') }}>Lihat daftar Konsumen</a>
                 </div>
             </div>
         </li>
@@ -171,7 +169,7 @@
                                 @csrf
                             </form>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            <a class="dropdown-item" href="#" id="logout-link">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
@@ -182,24 +180,11 @@
 
             </nav>
             <!-- End of Topbar -->
-
-            <!-- Logout Modal -->
-        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" type="button"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</button>
-                </div>
-            </div>
-        </div>
-    </div>
+            <script>
+                document.getElementById('logout-link').addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent the default link action
+                    if (confirm('Are you sure you want to log out?')) {
+                        document.getElementById('logout-form').submit(); // Submit the form
+                    }
+                });
+            </script>
