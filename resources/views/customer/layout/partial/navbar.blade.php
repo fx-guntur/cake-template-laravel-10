@@ -24,9 +24,11 @@
                 <form id="logout-form" action="{{ route('merchant.auth.logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-                <a href="{{ route('merchant.auth.logout') }}" class="text-white"
-                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><small
-                        class="text-white ms-2">Logout</small></a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" id="logout-link">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
             </div>
         </div>
     </div>
@@ -90,3 +92,11 @@
     </div>
 </div>
 <!-- Navbar End -->
+<script>
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link action
+        if (confirm('Are you sure you want to log out?')) {
+            document.getElementById('logout-form').submit(); // Submit the form
+        }
+    });
+</script>
