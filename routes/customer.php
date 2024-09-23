@@ -12,8 +12,8 @@ use App\Http\Controllers\Customer\ShopController;
 use App\Http\Controllers\Customer\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['as' => 'customer.'], function() {
-    Route::group(['as' => 'auth.'], function() {
+Route::group(['as' => 'customer.'], function () {
+    Route::group(['as' => 'auth.'], function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [LoginController::class, 'login'])->name('store');
 
@@ -25,13 +25,13 @@ Route::group(['as' => 'customer.'], function() {
 
     Route::group([
         'middleware' => ['auth:customer']
-    ], function() {
+    ], function () {
         // Dashboard
         Route::resource('checkout', CheckoutController::class);
-        Route::resource('profile', ProfileController::class);
+        Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
+        Route::get('profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+
         Route::resource('cart', CartController::class);
     });
 });
-
-
-?>

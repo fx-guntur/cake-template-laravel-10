@@ -70,14 +70,14 @@
                             class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                             style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                     </a>
-                    <a href="{{ route('customer.profile.index') }}" class="my-auto" id="userMenuButton">
+                    <a href="{{ route('customer.profile.show', ['profile' => Auth::id()]) }}" class="my-auto" id="userMenuButton">
                         <i class="fas fa-user fa-2x"></i>
                     </a>
 
                     <!-- Menu Popup -->
                     <div id="userMenuPopup" class="popup-menu" style="display: none;">
                         <ul>
-                            <li><a href="{{ route('customer.profile.index') }}">Lihat Profil</a></li>
+                            <li><a href="{{ route('customer.profile.show', ['profile' => Auth::id()]) }}">Lihat Profil</a></li>
                             <li><a href="{{ route('customer.auth.logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                             </li>
