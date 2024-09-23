@@ -7,6 +7,7 @@ use App\Http\Controllers\Merchant\DeleteCatalogController;
 use App\Http\Controllers\Merchant\ManagementProductController;
 use App\Http\Controllers\Merchant\ProductDetailController;
 use App\Http\Controllers\Merchant\ProfileController;
+use App\Http\Controllers\Merchant\ShowTransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'merchant.'], function() {
@@ -27,6 +28,7 @@ Route::group(['as' => 'merchant.'], function() {
         Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
         Route::resource('detail-product', ProductDetailController::class);
+        Route::resource('show-transaction', ShowTransactionController::class);
     });
 });
 
