@@ -16,7 +16,7 @@
               <h1>Sign Up</h1>
               <p>Persiapkan diri untuk masa depan yang penuh dengan bintang</p>
           </div>
-          <form action="{{ route('customer.register') }}" method="post" id="signup-form">
+          <form action="{{ route('customer.auth.register') }}" method="post" id="signup-form">
               @csrf
               <div class="input-group border-primary">
                   <label for="name">Name</label>
@@ -61,7 +61,7 @@
                   @enderror
               </div>
               <button type="submit" class="btn-secondary btn-submit">Sign Up</button>
-              <p class="text-center">Already have an account? <a href="{{ route('customer.login') }}" class="link">Sign In</a></p>
+              <p class="text-center">Already have an account? <a href="{{ route('customer.auth.login') }}" class="link">Sign In</a></p>
           </form>
       </section>
   </main>

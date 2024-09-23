@@ -20,7 +20,7 @@ class AddMerchantController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

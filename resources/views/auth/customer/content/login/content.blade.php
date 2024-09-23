@@ -37,7 +37,7 @@
                 </div>
 
                 <button type="submit" class="btn-secondary btn-submit">Sign In</button>
-                <p class="text-center">Don't have an account? <a href="signup" class="link">Sign Up</a></p>
+                <p class="text-center">Don't have an account? <a href="{{ route('customer.auth.register') }}" class="link">Sign Up</a></p>
             </form>
         </section>
     </main>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Customer\Auth\LoginController;
+use App\Http\Controllers\Customer\Auth\RegisterController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\CheckoutController;
 use App\Http\Controllers\Customer\ContactController;
@@ -15,6 +16,9 @@ Route::group(['as' => 'customer.'], function() {
     Route::group(['as' => 'auth.'], function() {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [LoginController::class, 'login'])->name('store');
+
+        Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
+        Route::post('/register', [RegisterController::class, 'register'])->name('create');
 
         Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     });
