@@ -23,14 +23,9 @@ Route::group(['as' => 'customer.'], function() {
         'middleware' => ['auth:customer']
     ], function() {
         // Dashboard
-        Route::get('/', DashboardController::class)->name('dashboard');
-        Route::resource('cart', CartController::class);
         Route::resource('checkout', CheckoutController::class);
-        Route::resource('contact', ContactController::class);
         Route::resource('profile', ProfileController::class);
-        Route::resource('detail', ItemDetailController::class);
-        Route::resource('shop', ShopController::class);
-        Route::resource('testimonial', TestimonialController::class);
+        Route::resource('cart', CartController::class);
     });
 });
 

@@ -27,7 +27,7 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->redirectTo = route('customer.dashboard'); // Redirect to customer dashboard after login
+        $this->redirectTo = route('public.dashboard'); // Redirect to customer dashboard after login
     }
 
     /**
@@ -56,7 +56,7 @@ class LoginController extends Controller
 
         // Check if the user is already authenticated
         if (Auth::guard('customer')->check()) {
-            return redirect()->route('customer.dashboard')->with('success', 'Login successful!');
+            return redirect()->route('public.dashboard')->with('success', 'Login successful!');
         }
 
         // Check for too many login attempts
