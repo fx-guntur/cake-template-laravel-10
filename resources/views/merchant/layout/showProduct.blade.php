@@ -1,5 +1,5 @@
-@extends('customer.layout.partial.master')
-@section('title', 'Admin')
+@extends('merchant.layout.partial.master')
+@section('title', 'merchant')
 @section('content')
-@include('merchant.content.form.showProduct')
+@include('merchant.content.panel.showProduct')
 @endsection

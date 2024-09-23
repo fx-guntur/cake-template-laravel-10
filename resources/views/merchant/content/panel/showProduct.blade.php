@@ -49,7 +49,7 @@
                             <td>2011/04/25</td>
                             <td>$320,800</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
+                                <a href={{route('merchant.previewProduct.index')}} class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
                             </td>
                         </tr>
                         <tr>
@@ -60,7 +60,7 @@
                             <td>2011/07/25</td>
                             <td>$170,750</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
+                                <a href={{route('merchant.previewProduct.index')}} class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
                             </td>
                         </tr>
                         <tr>
@@ -71,7 +71,7 @@
                             <td>2009/01/12</td>
                             <td>$86,000</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
+                                <a href={{route('merchant.previewProduct.index')}} class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
                             </td>
                         </tr>
                         <tr>
@@ -82,7 +82,7 @@
                             <td>2012/03/29</td>
                             <td>$433,060</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
+                                <a href={{route('merchant.previewProduct.index')}} class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
                             </td>
                         </tr>
                         <tr>
@@ -93,7 +93,7 @@
                             <td>2008/11/28</td>
                             <td>$162,700</td>
                             <td>
-                                <a href="#" class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
+                                <a href={{route('merchant.previewProduct.index')}} class="btn btn-info btn-sm">Lihat Detail</a> <!-- Added button -->
                             </td>
                         </tr>
                     </tbody>

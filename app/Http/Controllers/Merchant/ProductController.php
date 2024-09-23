@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Merchant;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class ShowTransactionController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('merchant.layout.showTransaction');
+        return view('merchant.layout.previewProduct');
     }
 
     /**

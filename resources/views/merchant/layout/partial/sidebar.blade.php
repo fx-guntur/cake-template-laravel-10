@@ -58,7 +58,7 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.seminar-event.index') }}>Lihat daftar transaksi</a>
+                    <a class="collapse-item" href={{ route('merchant.show-transaction.index') }}>Lihat daftar transaksi</a>
                 </div>
             </div>
         </li>
@@ -68,11 +68,11 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-calendar-day"></i>
-                <span>Pendaftaran Digimicro</span>
+                <span>Lihat Produk</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{route("admin.register-digimikro.index")}}>pendaftaran digimikro</a>
+                    <a class="collapse-item" href={{route("merchant.show-product.index")}}>Lihat Produk</a>
 
                 </div>
             </div>
