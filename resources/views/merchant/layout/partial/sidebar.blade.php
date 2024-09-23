@@ -43,7 +43,7 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.event.index') }}>Lihat semua produk</a>
+                    <a class="collapse-item" href={{ route('merchant.management-product.index') }}>Lihat semua produk</a>
                 </div>
             </div>
         </li>
@@ -72,13 +72,14 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    {{-- <a class="collapse-item" href={{route("admin.digimikro-daftar")}}>pendaftaran digimikro</a> --}}
+                    <a class="collapse-item" href={{route("admin.register-digimikro.index")}}>pendaftaran digimikro</a>
+
                 </div>
             </div>
         </li>
         <!-- Nav Item - Tables -->
         <li class="nav-item">
-            {{-- <a class="nav-link" href={{ route("admin.add-merchant") }}> --}}
+            <a class="nav-link" href={{ route("admin.add-merchant.index") }}>
             <i class="fas fa-sign-in-alt"></i>
             <span>Daftar merchant</span></a>
         </li>
