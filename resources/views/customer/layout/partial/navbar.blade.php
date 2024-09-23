@@ -32,7 +32,7 @@
     </div>
     <div class="container px-0">
         <nav class="navbar navbar-light bg-white navbar-expand-xl">
-            <a href="/" class="navbar-brand">
+            <a href="{{ route('public.dashboard') }}" class="navbar-brand">
                 <h1 class="text-primary display-6">Fruitables</h1>
             </a>
             <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
@@ -41,23 +41,23 @@
             </button>
             <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                 <div class="navbar-nav mx-auto">
-                    <a href="/" class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
-                    <a href="/shop" class="nav-item nav-link {{ request()->is('shop') ? 'active' : '' }}">Shop</a>
-                    <a href="/shop-detail"
+                    <a href="{{ route('public.dashboard') }}" class="nav-item nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+                    <a href="{{ route('public.shop.index') }}" class="nav-item nav-link {{ request()->is('shop') ? 'active' : '' }}">Shop</a>
+                    <a href="{{ route('public.detail.index') }}"
                         class="nav-item nav-link {{ request()->is('shop-detail') ? 'active' : '' }}">Shop Detail</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                            <a href="/cart" class="dropdown-item {{ request()->is('cart') ? 'active' : '' }}">Cart</a>
+                            <a href="{{ route('customer.cart.index') }}" class="dropdown-item {{ request()->is('cart') ? 'active' : '' }}">Cart</a>
                             <a href="customer/checkout"
                                 class="dropdown-item {{ request()->is('customer/checkout') ? 'active' : '' }}">Checkout</a>
-                            <a href="/testimonial"
+                            <a href="{{ route('public.testimonial.index') }}"
                                 class="dropdown-item {{ request()->is('testimonial') ? 'active' : '' }}">Testimonial</a>
                             <a href="/404" class="dropdown-item {{ request()->is('404') ? 'active' : '' }}">404
                                 Page</a>
                         </div>
                     </div>
-                    <a href="{{ route('customer.contact.index') }}"
+                    <a href="{{ route('public.contact.index') }}"
                         class="nav-item nav-link {{ request()->is('contact') ? 'active' : '' }}">Contact</a>
                 </div>
                 <div class="d-flex m-3 me-0">
