@@ -1,5 +1,5 @@
 @extends('merchant.layout.partial.master')
 @section('title', 'merchant')
 @section('content')
-@include('merchant.content.panel.showProduct')
+@include('merchant.content.panel.showallProduct')
 @endsection

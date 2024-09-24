@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,26 +33,27 @@ class ProfileController extends Controller
      */
     public function update(Request $request)
     {
-    //     $user = Auth::guard('customer')->user(); // Get the authenticated user
+        // $user = Auth::guard('customer')->user(); // Get the authenticated user
+        $user = Customer::findOrFail(Auth::guard('customer')->user()->id);
 
-    //     // Validate the request
-    //     $request->validate([
-    //         'name' => 'required|string|max:255',
-    //         'phone' => 'required|string|max:15',
-    //         'username' => 'required|string|max:255|unique:customers,username,' . $user->id,
-    //         'email' => 'required|string|email|max:255|unique:customers,email,' . $user->id,
-    //         'password' => 'nullable|string|min:5|confirmed', // Password is optional for update
-    //     ]);
+        // Validate the request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:15',
+            'username' => 'required|string|max:255|unique:customers,username,' . $user->id,
+            'email' => 'required|string|email|max:255|unique:customers,email,' . $user->id,
+            'password' => 'nullable|string|min:5|confirmed', // Password is optional for update
+        ]);
 
-    //     // Update user information
-    //     $user->name = $request->name;
-    //     $user->phone = $request->phone;
-    //     $user->username = $request->username;
-    //     $user->email = $request->email;
-    //     $user->password = $request->password;
+        // Update user information
+        $user->name = $request->name;
+        $user->phone = $request->phone;
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->password = $request->password;
 
-    //     $user->save();
+        $user->save();
 
-    //     return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully.');
     }
 }
