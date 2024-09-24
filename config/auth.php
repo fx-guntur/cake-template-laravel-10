@@ -32,10 +32,10 @@ return [
     */
 
     'guards' => [
-        // 'web' => [
-        //     'driver' => 'session',
-        //     'provider' => 'customers', // Ensure this provider exists
-        // ],
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'customers', // Ensure this provider exists
+        ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins', // Added admin guard
