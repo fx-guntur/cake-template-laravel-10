@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class AddSeminarEventController extends Controller
+class ShowDataCustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('admin.layout.show-data-merchant');
+        return view('admin.layout.show-data-customer');
     }
 
     /**

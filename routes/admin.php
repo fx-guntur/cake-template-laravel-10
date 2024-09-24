@@ -1,12 +1,11 @@
 <?php
 
 use App\Http\Controllers\Admin\AddMerchantController;
-use App\Http\Controllers\Admin\AddSeminarEventController;
 use App\Http\Controllers\Admin\Auth\LoginController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EventController;
-use App\Http\Controllers\Admin\RegisterDigimikroController;
-use App\Http\Controllers\Admin\SeminarEventController;
+use App\Http\Controllers\Admin\ShowDataCustomerController;
+use App\Http\Controllers\Admin\ShowDataMerchantController;
+use App\Http\Controllers\Admin\ShowDataTransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['as' => 'admin.'], function() {
@@ -22,11 +21,10 @@ Route::group(['as' => 'admin.'], function() {
     ], function() {
         // Dashboard
         Route::get('/', DashboardController::class)->name('dashboard');
-        Route::resource('add-seminar-event', AddSeminarEventController::class);
         Route::resource('add-merchant', AddMerchantController::class);
-        Route::resource('show-data-merchant', EventController::class);
-        Route::resource('seminar-event', SeminarEventController::class);
-        Route::resource('register-digimikro', RegisterDigimikroController::class);
+        Route::resource('customer-data', ShowDataCustomerController::class);
+        Route::resource('merchant-data', ShowDataMerchantController::class);
+        Route::resource('transaction-data', ShowDataTransactionController::class);
     });
 });
 

@@ -30,10 +30,6 @@
 
         <!-- Heading -->
 
-        <div class="sidebar-heading">
-            {{ request()->is('/merchant/merchant-panel') ? 'kegiatan' : 'Menu diklat usaha' }}
-        </div>
-
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
@@ -43,7 +39,7 @@
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.event.index') }}>Lihat Daftar Merchant</a>
+                    <a class="collapse-item" href={{ route('admin.merchant-data.index') }}>Lihat Daftar Merchant</a>
                 </div>
             </div>
         </li>
@@ -59,7 +55,7 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
 
-                    <a class="collapse-item" href={{ route('admin.register-digimikro.index') }}>Lihat Daftar Transaksi</a>
+                    <a class="collapse-item" href={{ route('admin.transaction-data.index') }}>Lihat Daftar Transaksi</a>
                 </div>
             </div>
         </li>
@@ -73,7 +69,7 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.seminar-event.index') }}>Lihat daftar Konsumen</a>
+                    <a class="collapse-item" href={{ route('admin.customer-data.index') }}>Lihat daftar customer</a>
                 </div>
             </div>
         </li>
