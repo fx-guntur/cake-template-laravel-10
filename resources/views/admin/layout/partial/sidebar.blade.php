@@ -59,7 +59,7 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
 
-                    <a class="collapse-item" href={{ route('admin.event.index') }}>Lihat Daftar Transaksi</a>
+                    <a class="collapse-item" href={{ route('admin.register-digimikro.index') }}>Lihat Daftar Transaksi</a>
                 </div>
             </div>
         </li>
@@ -73,7 +73,7 @@
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item" href={{ route('admin.register-digimikro.index') }}>Lihat daftar Konsumen</a>
+                    <a class="collapse-item" href={{ route('admin.seminar-event.index') }}>Lihat daftar Konsumen</a>
                 </div>
             </div>
         </li>

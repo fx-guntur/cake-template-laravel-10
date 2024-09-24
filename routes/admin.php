@@ -24,7 +24,7 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::resource('add-seminar-event', AddSeminarEventController::class);
         Route::resource('add-merchant', AddMerchantController::class);
-        Route::resource('event', EventController::class);
+        Route::resource('show-data-merchant', EventController::class);
         Route::resource('seminar-event', SeminarEventController::class);
         Route::resource('register-digimikro', RegisterDigimikroController::class);
     });

@@ -12,7 +12,7 @@ class SeminarEventController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.seminar-event');
+        return view('admin.layout.show-data-customer');
     }
 
     /**

@@ -12,7 +12,7 @@ class RegisterDigimikroController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.digimikro-daftar');
+        return view('admin.layout.show-data-transaction');
     }
 
     /**

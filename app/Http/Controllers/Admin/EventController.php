@@ -12,7 +12,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.event');
+        return view('admin.layout.show-data-merchant');
     }
 
     /**

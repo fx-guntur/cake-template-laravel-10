@@ -1,5 +1,5 @@
 @extends('admin.layout.partial.master')
 @section('title', 'Admin Panel')
 @section('content')
-@include('admin.content.event.event')
+@include('admin.content.show-data-customer.show-data-customer')
 @endsection
