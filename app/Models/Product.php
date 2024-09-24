@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory, Notifiable, SoftDeletes;
 
-    protected $table = 'customers'; // Specify the table name if different
+    protected $table = 'product'; // Specify the table name if different
 
     protected $fillable = [
         'uuid',          // If you're using UUIDs
