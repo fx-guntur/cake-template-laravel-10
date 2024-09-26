@@ -6,13 +6,14 @@
                 <h5 class="card-title mb-0">Tambah Produk</h5>
             </div>
             <div class="card-body mt-4">
-                <form>
+                <form action="{{ route('merchant.product.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf <!-- CSRF Token -->
                     <div class="row mb-3">
                         <!-- Name Field -->
                         <div class="col-md-6">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter the fruit's name" required style="border-radius: 13px;" />
+                                placeholder="Enter the product name" required style="border-radius: 13px;" />
                         </div>
                         <!-- Price Field -->
                         <div class="col-md-6">
@@ -28,7 +29,7 @@
                             <label for="image" class="form-label">Image</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" accept=".png,.jpg,.jpeg"
-                                    name="image" required />
+                                    name="image"  />
                                 <label class="custom-file-label" for="image">Choose file</label>
                             </div>
                         </div>
@@ -36,7 +37,7 @@
                         <!-- Description Field -->
                         <div class="col-md-6">
                             <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" name="description" id="description" rows="4" placeholder="Describe the fruit"
+                            <textarea class="form-control" name="description" id="description" rows="4" placeholder="Describe the product"
                                 required style="border-radius: 13px;"></textarea>
                         </div>
                     </div>

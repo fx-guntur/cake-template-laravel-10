@@ -11,8 +11,8 @@ use App\Http\Controllers\Merchant\ShowTransactionController;
 use App\Http\Controllers\Merchant\ProductController;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['as' => 'merchant.'], function() {
-    Route::group(['as' => 'auth.'], function() {
+Route::group(['as' => 'merchant.'], function () {
+    Route::group(['as' => 'auth.'], function () {
         Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [LoginController::class, 'login'])->name('store');
 
@@ -21,7 +21,7 @@ Route::group(['as' => 'merchant.'], function() {
 
     Route::group([
         'middleware' => ['auth:merchant']
-    ], function() {
+    ], function () {
         // Dashboard
         Route::get('/', DashboardController::class)->name('dashboard');
         Route::resource('add-catalog', AddCatalogController::class);
@@ -31,8 +31,22 @@ Route::group(['as' => 'merchant.'], function() {
         Route::resource('previewProduct', ProductController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
         Route::resource('show-product', ProductDetailController::class);
+        // Product Routes
+        Route::get('/product/data', [ProductController::class, 'getData'])->name('product.getData');
+        // transaction Routes
+        Route::get('/transaction/data', [ShowTransactionController::class, 'getData'])->name('transaction.getData');
+        Route::get('/product/store', [ProductController::class, 'store'])->name('product.store');
+        // Route to handle the form submission (POST)
+        Route::post('/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
+
+        // Route to display the form (GET)
+        Route::get('/product/create', [ProductController::class, 'create'])->name('merchant.product.create');
+
+        // Route to handle the form submission (POST)
+        // Route::post('/merchant/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
+
+        // Detail product preview route
+        Route::resource('previewProduct', ProductDetailController::class); // Detail produk
+
     });
 });
-
-
-?>

@@ -16,7 +16,7 @@ class MerchantSeeder extends Seeder
         DB::table('merchants')->insert([
             [
                 'uuid' => Str::uuid(),
-                'email' =>  'merchant@example.com',
+                'email' =>  'merchant2@example.com',
                 'username' => 'merchant',
                 'password' => bcrypt('password123'), // Store hashed password
                 'raw_password' => 'password123', // Store raw password if needed
@@ -24,5 +24,9 @@ class MerchantSeeder extends Seeder
             ],
             // Add more sample customers as needed
         ]);
+        // Get the id of the inserted merchant
+// // Get the id of the inserted merchant
+// $merchantId = DB::table('merchants')->where('email', 'merchant@example.com')->value('id');
+
     }
 }

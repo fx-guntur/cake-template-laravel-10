@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Models\showTransaction;
 use Illuminate\Http\Request;
 
 class ShowTransactionController extends Controller
@@ -61,5 +62,21 @@ class ShowTransactionController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getData(Request $request){
+        $query = showTransaction::select('uuid', 'payment_code', 'invoice', 'type', 'amount' ,'status','created_at');
+
+        // Remove this line in production; it's only for debugging.
+        // dd($query->get());
+
+        return datatables()->of($query)
+            ->addColumn('action', function ($row) {
+                // return '<a href="' . route('products.edit', $row->product_id) . '" class="btn btn-sm btn-primary">Edit</a>';
+            })
+            // ->editColumn('status', function ($row) {
+            //     return $row->status ? 'Active' : 'Inactive';
+            // })
+            ->make(true);
     }
 }
