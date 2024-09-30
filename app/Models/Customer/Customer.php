@@ -46,8 +46,4 @@ class Customer extends Model implements AuthenticatableContract
         $this->attributes['password'] = bcrypt($value);
         $this->attributes['raw_password'] = $value; // Optional, if you want to keep the raw password
     }
-
-    // Disable timestamps if not using created_at and updated_at
-    public $timestamps = false;
-
 }

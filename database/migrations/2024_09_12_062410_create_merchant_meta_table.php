@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('merchant_id')->index('fk__merchants');
             $table->string('key', 50);
             $table->text('value');
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 

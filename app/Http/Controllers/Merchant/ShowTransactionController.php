@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
-use App\Models\showTransaction;
+use App\Models\Transaction\Transaction;
 use Illuminate\Http\Request;
 
 class ShowTransactionController extends Controller
@@ -65,7 +65,7 @@ class ShowTransactionController extends Controller
     }
 
     public function getData(Request $request){
-        $query = showTransaction::select('uuid', 'payment_code', 'invoice', 'type', 'amount' ,'status','created_at');
+        $query = Transaction::select('uuid', 'payment_code', 'invoice', 'type', 'amount' ,'status','created_at');
 
         // Remove this line in production; it's only for debugging.
         // dd($query->get());

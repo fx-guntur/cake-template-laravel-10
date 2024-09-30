@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Merchant;
 
 use Illuminate\Http\Request;
-use App\Models\Product;
+use App\Models\Product\Product;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Models\Merchant\Merchant;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -31,28 +33,44 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        // Validasi input dari form tanpa gambar
+        // Get the authenticated user
+        $user = Merchant::findOrFail(Auth::guard('merchant')->user()->id);
+
+        // Validate input from the form including the image
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validate image
         ]);
 
-        // Buat produk baru
-        $product = Product::create([
-            'uuid' => (string) Str::uuid(),
-            'merchant_id' => auth()->user()->merchant_id, // Pastikan merchant_id diambil dari user login
-            'name' => $request->input('name'),
-            'price' => $request->input('price'),
-            'description' => $request->input('description'),
-            'is_active' => 1, // Misal: set aktif secara default
-        ]);
+        // Create a new product instance
+        $product = new Product();
+        $product->merchant_id = $user->id; // Set the merchant_id
+        $product->name = $request->input('name');
+        $product->price = $request->input('price');
+        $product->description = $request->input('description');
+        $product->is_active = 1;
 
-        // Kode untuk mengelola gambar telah dihapus
+        // Save the product instance
+        $product->save();
 
-        return redirect()->route('merchant.products.index')->with('success', 'Produk berhasil ditambahkan.');
+        // If there's an image, save it to the product_images table
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+
+            // Store the image in the public storage
+            $path = $image->store('products', 'public'); // Store image in storage/products
+
+            // Create a new entry in the product_images table with the path as a string
+            $product->images()->create([
+                'uuid' => (string) Str::uuid(),
+                'path' => $path, // Save path as a string
+            ]);
+        }
+
+        return redirect()->route('merchant.show-product.index')->with('success', 'Produk berhasil ditambahkan.');
     }
-
 
     /**
      * Display the specified resource.
