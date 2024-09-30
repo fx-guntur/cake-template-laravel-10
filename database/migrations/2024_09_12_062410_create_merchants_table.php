@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('username', 50)->default('');
             $table->string('password')->default('');
             $table->string('raw_password')->default('');
-            $table->timestamp('created_at');
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 

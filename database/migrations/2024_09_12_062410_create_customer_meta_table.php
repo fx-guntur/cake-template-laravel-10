@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('customer_meta', function (Blueprint $table) {
             $table->integer('id', true);
+            $table->string('uuid', 36);
             $table->integer('customer_id')->index('fk__customers');
             $table->string('key', 50);
             $table->text('value');
+            $table->timestamps(); 
+            $table->softDeletes();
         });
     }
 

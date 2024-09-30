@@ -45,7 +45,4 @@ class Merchant extends Model implements AuthenticatableContract
     }
 
     public $timestamps = true; // Enable timestamps
-
-    // Disable the updated_at timestamp
-    const UPDATED_AT = null;
 }
