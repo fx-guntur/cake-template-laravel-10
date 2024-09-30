@@ -12,7 +12,7 @@ class ManagementProductController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.managementProduk');
+        return view('merchant.layout.viewProdut');
     }
 
     /**

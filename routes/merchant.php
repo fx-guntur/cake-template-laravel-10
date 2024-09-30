@@ -28,9 +28,9 @@ Route::group(['as' => 'merchant.'], function () {
         Route::resource('delete-catalog', DeleteCatalogController::class);
         Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
-        Route::resource('previewProduct', ProductController::class);
+        Route::resource('previewProduct', ProductDetailController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
-        Route::resource('show-product', ProductDetailController::class);
+        Route::resource('show-product', ProductController::class);
         // Product Routes
         Route::get('/product/data', [ProductController::class, 'getData'])->name('product.getData');
         // transaction Routes

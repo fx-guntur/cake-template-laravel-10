@@ -12,7 +12,7 @@ class ProductDetailController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.showallProduct');
+        return view('merchant.layout.viewProduct');
     }
 
     /**

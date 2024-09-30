@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.viewProduct');
+        return view('merchant.layout.showallProduct');
     }
 
     /**
@@ -96,9 +96,9 @@ class ProductController extends Controller
             ->addColumn('action', function ($row) {
                 // return '<a href="' . route('products.edit', $row->product_id) . '" class="btn btn-sm btn-primary">Edit</a>';
             })
-            ->editColumn('status', function ($row) {
-                return $row->status ? 'Active' : 'Inactive';
-            })
+            // ->editColumn('status', function ($row) {
+            //     return $row->status ? 'Active' : 'Inactive';
+            // })
             ->make(true);
     }
 }

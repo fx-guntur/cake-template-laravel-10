@@ -62,7 +62,7 @@
 $(document).ready(function() {
     $('#transactionTable').DataTable({
         processing: true,
-        serverSide: false,
+        serverSide: true,
         ajax: '{{ route("merchant.transaction.getData") }}', // URL untuk request data via AJAX
         columns: [
             { data: 'uuid', name: 'uuid' },
