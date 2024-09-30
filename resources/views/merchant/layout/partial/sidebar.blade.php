@@ -68,12 +68,12 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                 aria-expanded="true" aria-controls="collapsePages">
                 <i class="fas fa-calendar-day"></i>
-                <span>Lihat Produk</span>
+                <span>Produk</span>
             </a>
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href={{route("merchant.show-product.index")}}>Lihat Produk</a>
-
+                    <a class="collapse-item" href={{route("merchant.add-catalog.index")}}>Lihat Produk</a>
                 </div>
             </div>
         </li>
