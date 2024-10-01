@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Merchant\Merchant;
 
 class ShowDataMerchantController extends Controller
 {
@@ -61,5 +62,17 @@ class ShowDataMerchantController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getMerchantsData(Request $request)
+    {
+        $merchants = Merchant::all(); // Fetch all merchants
+
+        return datatables()->of($merchants)
+            ->addColumn('action', function ($merchant) {
+                return '<a href="' . route('admin.merchant-data.edit', $merchant->id) . '" class="btn btn-sm btn-primary">Edit</a>
+                        <a href="' . route('admin.merchant-data.destroy', $merchant->id) . '" class="btn btn-sm btn-danger">Delete</a>';
+            })
+            ->rawColumns(['action'])  // To ensure HTML is rendered
+            ->make(true);
     }
 }
