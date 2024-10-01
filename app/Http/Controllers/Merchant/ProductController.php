@@ -58,18 +58,18 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $image = $request->file('image');
 
-            // Check if the image is valid
-            if (!$image->isValid()) {
-                dd('Invalid image file');
-            }
+            // // Check if the image is valid
+            // if (!$image->isValid()) {
+            //     dd('Invalid image file');
+            // }
 
             // Manually move the image
             $path = public_path('storage/products');
             $filename = time() . '_' . $image->getClientOriginalName(); // Rename for uniqueness
 
-            if (!$image->move($path, $filename)) {
-                dd('File upload failed');
-            }
+            // if (!$image->move($path, $filename)) {
+            //     dd('File upload failed');
+            // }
 
             $finalPath = 'products/' . $filename; // Adjust the path
 
