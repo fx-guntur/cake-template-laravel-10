@@ -35,6 +35,39 @@
 
 </div>
 <!-- /.container-fluid -->
+{{-- edit modal --}}
+<!-- Modal -->
+<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editProductForm">
+                    <input type="hidden" id="productId">
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="productName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Product Price</label>
+                        <input type="text" class="form-control" id="productPrice">
+                    </div>
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">Product Description</label>
+                        <textarea class="form-control" id="productDescription"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Footer -->
 <footer class="sticky-footer bg-white">
@@ -115,13 +148,26 @@
             ajax: {
                 url: '{{ route('merchant.product.getData') }}',
                 dataSrc: function(json) {
-                    return json.data;
+                    // Log the response to check if data is present
+                    // console.log(json);
+                    return json.data; // Ensure this matches your response structure
                 }
             },
-            columns: [
-                { data: 'name', name: 'name', title: 'Product Name' },
-                { data: 'price', name: 'price', title: 'Price' },
-                { data: 'description', name: 'description', title: 'Description' },
+            columns: [{
+                    data: 'name',
+                    name: 'name',
+                    title: 'Product Name'
+                },
+                {
+                    data: 'price',
+                    name: 'price',
+                    title: 'Price'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description'
+                },
                 {
                     data: 'status',
                     name: 'status',
@@ -130,25 +176,26 @@
                         return data ? 'Active' : 'Inactive';
                     }
                 },
-                { data: 'created_at', name: 'created_at', title: 'Created At' },
                 {
-                    data: 'action',
+                    data: 'created_at',
+                    name: 'created_at',
+                    title: 'Created At'
+                },
+                {
+                    data: null, // Use null to access the whole row
                     name: 'action',
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return `
-                            <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-id="${row.uuid}">Edit</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-id="${row.uuid}">Delete</a>
-                            <a href="/merchant/previewProduct/${row.uuid}" class="btn btn-info btn-sm">Lihat Detail</a>
-                        `;
+                        return `<a href="/merchant/product/${row.uuid}" class="btn btn-info btn-sm">Lihat Detail</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-id="${row.uuid}">Edit</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-id="${row.uuid}">Delete</a>`;
                     }
                 }
             ]
         });
-
-        // Handle Edit Button Click
-        $('body').on('click', '.editProduct', function() {
+         // Handle Edit Button Click
+         $('body').on('click', '.editProduct', function() {
             var productId = $(this).data('id');
             // Fetch the product details and populate the form
             $.get(`/merchant/products/${productId}/edit`)

@@ -98,6 +98,9 @@ class ProductController extends Controller
         return $this->hasMany(ProductImage::class, 'product_id');
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
     public function edit(string $id)
     {
         $product = Product::findOrFail($id); // Fetch product by ID
@@ -140,15 +143,13 @@ class ProductController extends Controller
 
     public function getData(Request $request)
     {
+        // Modify the query to include the UUID
         $query = Product::select('uuid', 'name', 'price', 'description', 'is_active as status', 'created_at');
 
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
-                return '
-                    <a href="javascript:void(0)" data-id="' . $row->uuid . '" class="btn btn-sm btn-primary editProduct">Edit</a>
-                    <a href="javascript:void(0)" data-id="' . $row->uuid . '" class="btn btn-sm btn-danger deleteProduct">Delete</a>
-                    <a href="/merchant/previewProduct/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>
-                ';
+                // Generate the action button using the UUID
+                return '<a href="/merchant/previewProduct/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>';
             })
             ->editColumn('status', function ($row) {
                 return $row->status ? 'Active' : 'Inactive';
