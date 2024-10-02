@@ -47,6 +47,8 @@ Route::group(['as' => 'merchant.'], function () {
 
         // Detail product preview route
         Route::resource('previewProduct', ProductDetailController::class); // Detail produk
+        Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
+
 
     });
 });

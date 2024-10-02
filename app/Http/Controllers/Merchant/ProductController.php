@@ -85,38 +85,58 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $product = Product::findOrFail($id); // Fetch product by ID
+
+        return response()->json($product); // Return product data as JSON
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'description' => 'nullable|string',
+        ]);
+
+        // Find the product by ID
+        $product = Product::findOrFail($id);
+
+        // Update the product with the validated data
+        $product->name = $validatedData['name'];
+        $product->price = $validatedData['price'];
+        $product->description = $validatedData['description'];
+
+        // Save the changes to the database
+        $product->save();
+
+        // Return a success response
+        return response()->json(['success' => 'Product updated successfully.']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete(); // This will soft delete the product
+
+        return response()->json(['success' => 'Product deleted successfully.']);
     }
+
     public function getData(Request $request)
     {
-        $query = Product::select('name', 'price', 'description', 'is_active as status', 'created_at');
-
-        // Remove this line in production; it's only for debugging.
-        // dd($query->get());
+        $query = Product::select('id', 'name', 'price', 'description', 'is_active as status', 'created_at');
 
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
-                // return '<a href="' . route('products.edit', $row->product_id) . '" class="btn btn-sm btn-primary">Edit</a>';
+                return '
+                    <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-primary editProduct">Edit</a>
+                    <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-danger deleteProduct">Delete</a>
+                ';
             })
-            // ->editColumn('status', function ($row) {
-            //     return $row->status ? 'Active' : 'Inactive';
-            // })
+            ->editColumn('status', function ($row) {
+                return $row->status ? 'Active' : 'Inactive';
+            })
             ->make(true);
     }
 }
