@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Merchant\Merchant;
+use App\Models\Product\ProductImage;
 use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
@@ -65,7 +66,9 @@ class ProductController extends Controller
             // Create a new entry in the product_images table with the path as a string
             $product->images()->create([
                 'uuid' => (string) Str::uuid(),
+                'product_id' => $product->id, // Store the product ID
                 'path' => $path, // Save path as a string
+
             ]);
         }
 
@@ -75,14 +78,26 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $uuid)
     {
-        //
+        // Mencari produk berdasarkan UUID
+        $product = Product::with('images')->where('uuid', $uuid)->firstOrFail();
+
+        // Check if the product exists
+        if (!$product) {
+            abort(404, 'Product not found');
+        }
+
+        // Mengembalikan data (bisa dalam bentuk view atau JSON)
+        return view('merchant.layout.viewProduct', compact('product'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Product.php
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
     public function edit(string $id)
     {
         $product = Product::findOrFail($id); // Fetch product by ID
@@ -125,13 +140,14 @@ class ProductController extends Controller
 
     public function getData(Request $request)
     {
-        $query = Product::select('id', 'name', 'price', 'description', 'is_active as status', 'created_at');
+        $query = Product::select('uuid', 'name', 'price', 'description', 'is_active as status', 'created_at');
 
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
                 return '
-                    <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-primary editProduct">Edit</a>
-                    <a href="javascript:void(0)" data-id="' . $row->id . '" class="btn btn-sm btn-danger deleteProduct">Delete</a>
+                    <a href="javascript:void(0)" data-id="' . $row->uuid . '" class="btn btn-sm btn-primary editProduct">Edit</a>
+                    <a href="javascript:void(0)" data-id="' . $row->uuid . '" class="btn btn-sm btn-danger deleteProduct">Delete</a>
+                    <a href="/merchant/previewProduct/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>
                 ';
             })
             ->editColumn('status', function ($row) {

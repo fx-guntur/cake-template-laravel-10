@@ -138,8 +138,9 @@
                     searchable: false,
                     render: function(data, type, row) {
                         return `
-                            <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-id="${row.id}">Edit</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-id="${row.id}">Delete</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-id="${row.uuid}">Edit</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-id="${row.uuid}">Delete</a>
+                            <a href="/merchant/previewProduct/${row.uuid}" class="btn btn-info btn-sm">Lihat Detail</a>
                         `;
                     }
                 }

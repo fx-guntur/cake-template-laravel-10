@@ -28,7 +28,6 @@ Route::group(['as' => 'merchant.'], function () {
         Route::resource('delete-catalog', DeleteCatalogController::class);
         Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
-        Route::resource('previewProduct', ProductDetailController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
         Route::resource('show-product', ProductController::class);
         // Product Routes
@@ -41,14 +40,13 @@ Route::group(['as' => 'merchant.'], function () {
 
         // Route to display the form (GET)
         Route::get('/product/create', [ProductController::class, 'create'])->name('merchant.product.create');
+        Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
 
         // Route to handle the form submission (POST)
         // Route::post('/merchant/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
 
         // Detail product preview route
-        Route::resource('previewProduct', ProductDetailController::class); // Detail produk
-        Route::get('/products/{id}/edit', [ProductController::class, 'edit']);
-
+        Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show'); // Detail produk
 
     });
 });
