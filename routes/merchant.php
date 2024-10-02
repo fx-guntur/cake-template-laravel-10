@@ -28,7 +28,6 @@ Route::group(['as' => 'merchant.'], function () {
         Route::resource('delete-catalog', DeleteCatalogController::class);
         Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
-        Route::resource('previewProduct', ProductDetailController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
         Route::resource('show-product', ProductController::class);
         // Product Routes
@@ -46,7 +45,7 @@ Route::group(['as' => 'merchant.'], function () {
         // Route::post('/merchant/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
 
         // Detail product preview route
-        Route::resource('previewProduct', ProductDetailController::class); // Detail produk
+        Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show'); // Detail produk
 
     });
 });
