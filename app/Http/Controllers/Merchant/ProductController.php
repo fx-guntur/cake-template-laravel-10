@@ -56,23 +56,12 @@ class ProductController extends Controller
         // Save the product instance
         $product->save();
 
+        // If there's an image, save it to the product_images table
         if ($request->hasFile('image')) {
             $image = $request->file('image');
 
-            // // Check if the image is valid
-            // if (!$image->isValid()) {
-            //     dd('Invalid image file');
-            // }
-
-            // Manually move the image
-            $path = public_path('storage/products');
-            $filename = time() . '_' . $image->getClientOriginalName(); // Rename for uniqueness
-
-            // if (!$image->move($path, $filename)) {
-            //     dd('File upload failed');
-            // }
-
-            $finalPath = 'products/' . $filename; // Adjust the path
+            // Store the image in the public storage
+            $path = $image->store('products', 'public'); // Store image in storage/products
 
             // Create a new entry in the product_images table with the path as a string
             $product->images()->create([
@@ -82,7 +71,6 @@ class ProductController extends Controller
 
             ]);
         }
-
 
         return redirect()->route('merchant.show-product.index')->with('success', 'Produk berhasil ditambahkan.');
     }
