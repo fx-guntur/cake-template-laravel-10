@@ -1,5 +1,5 @@
 @extends('merchant.layout.partial.master')
-@section('title', 'Admin')
+@section('title', 'Product Details')
 @section('content')
-@include('merchant.content.panel.viewProduct')
+    @include('merchant.content.panel.viewProduct', ['product' => $product])
 @endsection

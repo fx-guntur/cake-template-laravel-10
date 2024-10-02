@@ -24,6 +24,7 @@ Route::group(['as' => 'admin.'], function() {
 
         // Add the route for fetching merchants data
         Route::get('merchants-data', [ShowDataMerchantController::class, 'getMerchantsData'])->name('merchant-data.data');
+        Route::get('customers-data', [ShowDataCustomerController::class, 'getCustomerData'])->name('customer-data.data');
 
         // Resource routes
         Route::resource('merchant-data', ShowDataMerchantController::class);

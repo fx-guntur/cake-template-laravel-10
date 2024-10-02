@@ -59,15 +59,27 @@
             ajax: {
                 url: '{{ route('merchant.product.getData') }}',
                 dataSrc: function(json) {
-                    // console.log(json); // Log the response to check if data is present
+                    // Log the response to check if data is present
+                    // console.log(json); 
                     return json.data; // Ensure this matches your response structure
                 }
             },
             columns: [
-                // { data: 'id', name: 'id' }, // Assuming you want to show the ID
-                { data: 'name', name: 'name', title: 'Product Name' },
-                { data: 'price', name: 'price', title: 'Price' },
-                { data: 'description', name: 'description', title: 'Description' },
+                {
+                    data: 'name',
+                    name: 'name',
+                    title: 'Product Name'
+                },
+                {
+                    data: 'price',
+                    name: 'price',
+                    title: 'Price'
+                },
+                {
+                    data: 'description',
+                    name: 'description',
+                    title: 'Description'
+                },
                 {
                     data: 'status',
                     name: 'status',
@@ -76,14 +88,18 @@
                         return data ? 'Active' : 'Inactive';
                     }
                 },
-                { data: 'created_at', name: 'created_at', title: 'Created At' },
                 {
-                    data: 'action',
+                    data: 'created_at',
+                    name: 'created_at',
+                    title: 'Created At'
+                },
+                {
+                    data: null, // Use null to access the whole row
                     name: 'action',
                     orderable: false,
                     searchable: false,
                     render: function(data, type, row) {
-                        return `<a href="/merchant/previewProduct/${row.id}" class="btn btn-info btn-sm">Lihat Detail</a>`;
+                        return `<a href="/merchant/product/${row.uuid}" class="btn btn-info btn-sm">Lihat Detail</a>`;
                     }
                 }
             ]

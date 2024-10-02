@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Customer\Customer;
 
 class ShowDataCustomerController extends Controller
 {
@@ -61,5 +62,13 @@ class ShowDataCustomerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function getCustomersData(Request $request)
+    {
+        // Fetch all customers from the database
+        $customers = Customer::select(['username', 'email', 'phone']);
+
+        return datatables()->of($customers)
+            ->make(true);
     }
 }
