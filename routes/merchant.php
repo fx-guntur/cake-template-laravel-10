@@ -48,5 +48,11 @@ Route::group(['as' => 'merchant.'], function () {
         // Detail product preview route
         Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show'); // Detail produk
 
+         // Additional routes for product CRUD operations
+         Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show');
+         Route::get('/products/{uuid}/edit', [ProductController::class, 'edit'])->name('merchant.product.edit');
+         Route::put('/products/{uuid}', [ProductController::class, 'update'])->name('merchant.product.update');
+         Route::delete('/products/{uuid}', [ProductController::class, 'destroy'])->name('merchant.product.destroy');
+
     });
 });

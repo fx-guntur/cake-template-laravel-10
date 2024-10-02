@@ -42,12 +42,13 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validate image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         // Create a new product instance
         $product = new Product();
-        $product->merchant_id = $user->id; // Set the merchant_id
+        $product->merchant_id = $user->id;
+        $product->uuid = (string) Str::uuid();
         $product->name = $request->input('name');
         $product->price = $request->input('price');
         $product->description = $request->input('description');
@@ -59,16 +60,12 @@ class ProductController extends Controller
         // If there's an image, save it to the product_images table
         if ($request->hasFile('image')) {
             $image = $request->file('image');
+            $path = $image->store('products', 'public');
 
-            // Store the image in the public storage
-            $path = $image->store('products', 'public'); // Store image in storage/products
-
-            // Create a new entry in the product_images table with the path as a string
             $product->images()->create([
                 'uuid' => (string) Str::uuid(),
-                'product_id' => $product->id, // Store the product ID
-                'path' => $path, // Save path as a string
-
+                'product_id' => $product->id,
+                'path' => $path,
             ]);
         }
 
@@ -80,35 +77,23 @@ class ProductController extends Controller
      */
     public function show(string $uuid)
     {
-        // Mencari produk berdasarkan UUID
         $product = Product::with('images')->where('uuid', $uuid)->firstOrFail();
-
-        // Check if the product exists
-        if (!$product) {
-            abort(404, 'Product not found');
-        }
-
-        // Mengembalikan data (bisa dalam bentuk view atau JSON)
         return view('merchant.layout.viewProduct', compact('product'));
-    }
-
-    // Product.php
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class, 'product_id');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $uuid)
     {
-        $product = Product::findOrFail($id); // Fetch product by ID
-
-        return response()->json($product); // Return product data as JSON
+        $product = Product::where('uuid', $uuid)->firstOrFail();
+        return response()->json($product);
     }
 
-    public function update(Request $request, string $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $uuid)
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
@@ -117,10 +102,8 @@ class ProductController extends Controller
             'description' => 'nullable|string',
         ]);
 
-        // Find the product by ID
-        $product = Product::findOrFail($id);
-
-        // Update the product with the validated data
+        // Find the product by UUID
+        $product = Product::where('uuid', $uuid)->firstOrFail();
         $product->name = $validatedData['name'];
         $product->price = $validatedData['price'];
         $product->description = $validatedData['description'];
@@ -128,28 +111,31 @@ class ProductController extends Controller
         // Save the changes to the database
         $product->save();
 
-        // Return a success response
         return response()->json(['success' => 'Product updated successfully.']);
     }
 
-
-    public function destroy(string $id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $uuid)
     {
-        $product = Product::findOrFail($id);
-        $product->delete(); // This will soft delete the product
+        $product = Product::where('uuid', $uuid)->firstOrFail();
+        $product->delete();
 
         return response()->json(['success' => 'Product deleted successfully.']);
     }
 
+    /**
+     * Get product data for DataTables.
+     */
     public function getData(Request $request)
     {
-        // Modify the query to include the UUID
         $query = Product::select('uuid', 'name', 'price', 'description', 'is_active as status', 'created_at');
-
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
-                // Generate the action button using the UUID
-                return '<a href="/merchant/previewProduct/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>';
+                return '<a href="/merchant/product/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-uuid="' . $row->uuid . '">Edit</a>
+                        <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-uuid="' . $row->uuid . '">Delete</a>';
             })
             ->editColumn('status', function ($row) {
                 return $row->status ? 'Active' : 'Inactive';
