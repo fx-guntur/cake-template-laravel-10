@@ -22,13 +22,13 @@ Route::group(['as' => 'admin.'], function() {
         Route::resource('add-merchant', AddMerchantController::class);
         Route::resource('customer-data', ShowDataCustomerController::class);
 
-        // Add the route for fetching merchants data
-        Route::get('merchants-data', [ShowDataMerchantController::class, 'getMerchantsData'])->name('merchant-data.data');
-        Route::get('customers-data', [ShowDataCustomerController::class, 'getCustomerData'])->name('customer-data.data');
-
         // Resource routes
         Route::resource('merchant-data', ShowDataMerchantController::class);
         Route::resource('transaction-data', ShowDataTransactionController::class);
+
+        // Add the route for fetching merchants data
+        Route::get('merchants-data', [ShowDataMerchantController::class, 'getMerchantsData'])->name('merchant-data.data');
+        Route::get('customers-data', [ShowDataCustomerController::class, 'getCustomerData'])->name('customer-data.data');
     });
 });
 

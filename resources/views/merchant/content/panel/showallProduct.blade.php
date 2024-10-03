@@ -13,7 +13,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Data Produk</h6>
-            <a href="{{ route('merchant.add-catalog.index') }}" class="btn btn-success">
+            <a href="{{ route('merchant.show-product.create') }}" class="btn btn-success">
                 <i class="fas fa-plus"></i> Tambah Produk
             </a>
         </div>
@@ -87,115 +87,143 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
+    const productionShowRoute = "{{ route('merchant.show-product.show', ':uuid') }}";
+    const productionEditRoute = "{{ route('merchant.show-product.edit', ':uuid') }}";
+    const productionUpdateRoute = "{{ route('merchant.show-product.update', ':uuid') }}";
+    const productionDestroyRoute = "{{ route('merchant.show-product.destroy', ':uuid') }}";
+    // const productionDeleteRoute = "{{ route('merchant.show-transaction.show', ':uuid') }}";
 
-    // Initialize DataTable
-    $('#products-table').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-            url: '{{ route('merchant.product.getData') }}',
-            dataSrc: function(json) {
-                return json.data;
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        },
-        columns: [
-            { data: 'name', name: 'name' },
-            { data: 'price', name: 'price' },
-            { data: 'description', name: 'description' },
-            {
-                data: 'status',
-                name: 'status',
-                render: function(data) {
-                    return data ? 'Active' : 'Inactive';
+        });
+
+        // Initialize DataTable
+        $('#products-table').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: '{{ route('merchant.product.getData') }}',
+                dataSrc: function(json) {
+                    return json.data;
                 }
             },
-            { data: 'created_at', name: 'created_at' },
-            {
-                data: null,
-                name: 'action',
-                orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    return `<a href="/merchant/product/${row.uuid}" class="btn btn-info btn-sm">Lihat Detail</a>
+            columns: [{
+                    data: 'name',
+                    name: 'name'
+                },
+                {
+                    data: 'price',
+                    name: 'price'
+                },
+                {
+                    data: 'description',
+                    name: 'description'
+                },
+                {
+                    data: 'status',
+                    name: 'status',
+                    render: function(data) {
+                        return data ? 'Active' : 'Inactive';
+                    }
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: null,
+                    name: 'action',
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        const url = productionShowRoute.replace(':uuid', row.uuid)
+                        return `
+                            <a href="${url}" class="btn btn-info btn-sm">Lihat Detail</a>
                             <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-uuid="${row.uuid}">Edit</a>
                             <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-uuid="${row.uuid}">Delete</a>`;
-                }
-            }
-        ]
-    });
-
-    // Handle Edit Button Click
-    $('body').on('click', '.editProduct', function() {
-        var productUUID = $(this).data('uuid');
-        $.get(`/merchant/products/${productUUID}/edit`)
-            .done(function(data) {
-                $('#productId').val(data.uuid);
-                $('#productName').val(data.name);
-                $('#productPrice').val(data.price);
-                $('#productDescription').val(data.description);
-                $('#editProductModal').modal('show');
-            })
-            .fail(function(xhr) {
-                Swal.fire('Error!', 'Failed to load product details.', 'error');
-            });
-    });
-
-    // Handle Save Changes Button Click
-    $('#saveChanges').on('click', function() {
-        var productUUID = $('#productId').val();
-        var updatedData = {
-            name: $('#productName').val(),
-            price: $('#productPrice').val(),
-            description: $('#productDescription').val()
-        };
-
-        $.ajax({
-            url: `/merchant/products/${productUUID}`,
-            type: 'PUT',
-            data: updatedData,
-            success: function(response) {
-                $('#editProductModal').modal('hide');
-                $('#products-table').DataTable().ajax.reload();
-                Swal.fire('Updated!', 'Product has been updated.', 'success');
-            },
-            error: function(xhr) {
-                Swal.fire('Error!', 'There was an error updating the product: ' + xhr.responseJSON.message, 'error');
-            }
-        });
-    });
-
-    // Handle Delete Button Click with SweetAlert
-    $('body').on('click', '.deleteProduct', function() {
-        var productUUID = $(this).data('uuid');
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "This action cannot be undone!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `/merchant/products/${productUUID}`,
-                    type: 'DELETE',
-                    success: function(response) {
-                        $('#products-table').DataTable().ajax.reload();
-                        Swal.fire('Deleted!', 'Product has been deleted.', 'success');
-                    },
-                    error: function(xhr) {
-                        Swal.fire('Error!', 'There was an error deleting the product.', 'error');
                     }
+                }
+            ]
+        });
+
+        // Handle Edit Button Click
+        $('body').on('click', '.editProduct', function() {
+            var productUUID = $(this).data('uuid');
+            const urlEdit = productionEditRoute.replace(':uuid', productUUID)
+            $.get(urlEdit)
+                .done(function(data) {
+                    $('#productId').val(data.uuid);
+                    $('#productName').val(data.name);
+                    $('#productPrice').val(data.price);
+                    $('#productDescription').val(data.description);
+                    $('#editProductModal').modal('show');
+                })
+                .fail(function(xhr) {
+                    Swal.fire('Error!', 'Failed to load product details.', 'error');
                 });
-            }
+        });
+
+        // Handle Save Changes Button Click
+        $('#saveChanges').on('click', function() {
+            var productUUID = $('#productId').val();
+            const urlUpdate = productionUpdateRoute.replace(':uuid', productUUID);
+
+            var updatedData = {
+                name: $('#productName').val(),
+                price: $('#productPrice').val(),
+                description: $('#productDescription').val()
+            };
+
+            $.ajax({
+                url: urlUpdate,
+                type: 'PUT',
+                data: updatedData,
+                success: function(response) {
+                    $('#editProductModal').modal('hide');
+                    $('#products-table').DataTable().ajax.reload();
+                    Swal.fire('Updated!', 'Product has been updated.', 'success');
+                },
+                error: function(xhr) {
+                    Swal.fire('Error!', 'There was an error updating the product: ' + xhr
+                        .responseJSON.message, 'error');
+                }
+            });
+        });
+
+        // Handle Delete Button Click with SweetAlert
+        $('body').on('click', '.deleteProduct', function() {
+            var productUUID = $(this).data('uuid');
+            const urlDestroy = productionDestroyRoute.replace(':uuid', productUUID);
+             
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action cannot be undone!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: urlDestroy,
+                        type: 'DELETE',
+                        success: function(response) {
+                            $('#products-table').DataTable().ajax.reload();
+                            Swal.fire('Deleted!', 'Product has been deleted.',
+                                'success');
+                        },
+                        error: function(xhr) {
+                            Swal.fire('Error!',
+                                'There was an error deleting the product.',
+                                'error');
+                        }
+                    });
+                }
+            });
         });
     });
-});
 </script>

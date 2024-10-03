@@ -6,7 +6,7 @@
                 <h5 class="card-title mb-0">Tambah Produk</h5>
             </div>
             <div class="card-body mt-4">
-                <form action="{{ route('merchant.product.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('merchant.show-product.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf <!-- CSRF Token -->
                     <div class="row mb-3">
                         <!-- Name Field -->

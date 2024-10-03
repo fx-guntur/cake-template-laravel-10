@@ -24,35 +24,17 @@ Route::group(['as' => 'merchant.'], function () {
     ], function () {
         // Dashboard
         Route::get('/', DashboardController::class)->name('dashboard');
+        // Resource
         Route::resource('add-catalog', AddCatalogController::class);
         Route::resource('delete-catalog', DeleteCatalogController::class);
         Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
         Route::resource('show-product', ProductController::class);
-        // Product Routes
+        // Product Routes get data
         Route::get('/product/data', [ProductController::class, 'getData'])->name('product.getData');
-        // transaction Routes
+        // transaction Routes get data
         Route::get('/transaction/data', [ShowTransactionController::class, 'getData'])->name('transaction.getData');
-        Route::get('/transactions/{uuid}', [ShowTransactionController::class, 'show'])->name('transactions.show');
 
-        Route::get('/product/store', [ProductController::class, 'store'])->name('product.store');
-        // Route to handle the form submission (POST)
-        Route::post('/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
-
-        // Route to display the form (GET)
-        Route::get('/product/create', [ProductController::class, 'create'])->name('merchant.product.create');
-
-        // Route to handle the form submission (POST)
-        // Route::post('/merchant/product/store', [ProductController::class, 'store'])->name('merchant.product.store');
-
-        // Detail product preview route
-        Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show'); // Detail produk
-
-        // Additional routes for product CRUD operations
-        Route::get('/product/{uuid}', [ProductController::class, 'show'])->name('merchant.product.show');
-        Route::get('/products/{uuid}/edit', [ProductController::class, 'edit'])->name('merchant.product.edit');
-        Route::put('/products/{uuid}', [ProductController::class, 'update'])->name('merchant.product.update');
-        Route::delete('/products/{uuid}', [ProductController::class, 'destroy'])->name('merchant.product.destroy');
     });
 });
