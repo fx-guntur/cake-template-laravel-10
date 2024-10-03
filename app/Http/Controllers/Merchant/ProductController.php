@@ -81,6 +81,11 @@ class ProductController extends Controller
         return view('merchant.layout.viewProduct', compact('product'));
     }
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class, 'product_id');
+    }
+
     /**
      * Show the form for editing the specified resource.
      */
