@@ -77,12 +77,6 @@
                 </div>
             </div>
         </li>
-        <!-- Nav Item - Tables -->
-        <li class="nav-item">
-            <a class="nav-link" href={{ route("admin.add-merchant.index") }}>
-            <i class="fas fa-sign-in-alt"></i>
-            <span>Daftar merchant</span></a>
-        </li>
     </ul>
     <!-- End of Sidebar -->
 
