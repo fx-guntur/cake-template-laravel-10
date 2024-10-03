@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Transaction\Transaction;
 use Illuminate\Http\Request;
 
 class ShowDataTransactionController extends Controller
@@ -36,7 +37,7 @@ class ShowDataTransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**

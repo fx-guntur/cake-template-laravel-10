@@ -33,8 +33,6 @@ class Transaction extends Model
         'transaction_paid_date', 
         'transaction_deadline',
         'status', 
-        'created_at', 
-        'updated_at'
     ];
 
     // Mengaktifkan timestamps (created_at, updated_at)

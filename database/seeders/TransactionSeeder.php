@@ -26,8 +26,8 @@ class TransactionSeeder extends Seeder
             DB::table('transactions')->insert([
                 'uuid' => Str::uuid(),
                 'merchant_id' => $faker->randomElement($merchantIds),
-                'customer_id' => $faker->numberBetween(1, 5),
-                'payment_id' => $faker->numberBetween(1, 5),
+                'customer_id' => 1,
+                'payment_id' => 1,
                 'payment_code' => 'PMT' . $faker->unique()->numerify('#####'),
                 'invoice' => 'INV' . $faker->unique()->numerify('#####'),
                 'type' => $faker->randomElement(['Credit Card', 'Bank Transfer', 'E-Wallet']),
