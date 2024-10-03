@@ -45,17 +45,16 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="transactionModalLabel">Transaction Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" aria-label="Close" id="closeModalBtn"></button>
                 </div>
                 <div class="modal-body" id="transactionContent">
                     <!-- Transaction details will be populated here -->
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" id="closeModalBtnFooter">Close</button>
                 </div>
             </div>
         </div>
-
     </div>
     <!-- /.container-fluid -->
     <!-- The Modal -->
@@ -92,15 +91,40 @@
             processing: true,
             serverSide: true,
             ajax: '{{ route('merchant.transaction.getData') }}',
-            columns: [
-                { data: 'uuid', name: 'uuid' },
-                { data: 'payment_code', name: 'payment_code' },
-                { data: 'invoice', name: 'invoice' },
-                { data: 'type', name: 'type' },
-                { data: 'amount', name: 'amount' },
-                { data: 'status', name: 'status' },
-                { data: 'created_at', name: 'created_at' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
+            columns: [{
+                    data: 'uuid',
+                    name: 'uuid'
+                },
+                {
+                    data: 'payment_code',
+                    name: 'payment_code'
+                },
+                {
+                    data: 'invoice',
+                    name: 'invoice'
+                },
+                {
+                    data: 'type',
+                    name: 'type'
+                },
+                {
+                    data: 'amount',
+                    name: 'amount'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+                {
+                    data: 'created_at',
+                    name: 'created_at'
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }
             ]
         });
     });
@@ -142,5 +166,22 @@
             .catch(error => {
                 console.error('Error fetching transaction details:', error);
             });
+    });
+
+    // Close modal using native JavaScript
+    document.getElementById('closeModalBtn').addEventListener('click', function() {
+        const modal = document.getElementById('transactionModal');
+        modal.style.display = 'none'; // Hide the modal
+        modal.classList.remove('show'); // Remove Bootstrap's show class
+        document.body.classList.remove('modal-open'); // Remove the modal-open class from body
+        document.querySelector('.modal-backdrop').remove(); // Remove the backdrop
+    });
+
+    document.getElementById('closeModalBtnFooter').addEventListener('click', function() {
+        const modal = document.getElementById('transactionModal');
+        modal.style.display = 'none'; // Hide the modal
+        modal.classList.remove('show'); // Remove Bootstrap's show class
+        document.body.classList.remove('modal-open'); // Remove the modal-open class from body
+        document.querySelector('.modal-backdrop').remove(); // Remove the backdrop
     });
 </script>
