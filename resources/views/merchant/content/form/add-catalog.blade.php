@@ -29,8 +29,12 @@
                             <label for="image" class="form-label">Image</label>
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="image" accept=".png,.jpg,.jpeg"
-                                    name="image"  />
+                                    name="image" />
                                 <label class="custom-file-label" for="image">Choose file</label>
+                                <!-- Display the uploaded image name if available -->
+                                @if (session('imageName'))
+                                    <small class="text-success">Uploaded Image: {{ session('imageName') }}</small>
+                                @endif
                             </div>
                         </div>
 
@@ -52,3 +56,11 @@
     </div>
 </main>
 <!-- ======= End of Main Content ======= -->
+<script>
+    document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+        var fileName = document.getElementById("image").files[0].name;
+        var nextSibling = e.target.nextElementSibling;
+        nextSibling.innerText = fileName;
+    });
+</script>
+

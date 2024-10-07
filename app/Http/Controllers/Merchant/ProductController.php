@@ -95,11 +95,6 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-       // Product.php
-    public function images()
-    {
-        return $this->hasMany(ProductImage::class, 'product_id');
-    }
 
     /**
      * Update the specified resource in storage.

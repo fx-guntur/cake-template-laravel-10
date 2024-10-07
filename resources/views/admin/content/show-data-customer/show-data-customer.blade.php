@@ -14,7 +14,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="merchantTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="customerTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>Username</th>
@@ -36,7 +36,7 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
 <script>
-    $('#merchantTable').DataTable({
+    $('#customerTable').DataTable({
     "processing": true,
     "serverSide": true,
     "ajax": {
@@ -44,14 +44,9 @@
         "type": "GET"
     },
     "columns": [
-        { "data": "email" },
         { "data": "username" },
-        { "data": "phone_number" },
-        {
-            "data": "action",
-            "orderable": false,
-            "searchable": false
-        }
+        { "data": "email" },
+        { "data": "phone" },
     ]
 });
 </script>

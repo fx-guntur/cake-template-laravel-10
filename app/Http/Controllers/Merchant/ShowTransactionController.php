@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant\Merchant;
 use App\Models\Transaction\Transaction;
 use App\Models\Transaction\TransactionMeta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShowTransactionController extends Controller
 {
@@ -74,8 +76,9 @@ class ShowTransactionController extends Controller
 
     public function getData(Request $request)
     {
-        $query = Transaction::select('uuid', 'payment_code', 'invoice', 'type', 'amount', 'status', 'created_at');
-
+        $merchant_id= Merchant::findOrFail(Auth::guard('merchant')->user()->id);
+        $query = Transaction::select('uuid', 'payment_code', 'invoice', 'type', 'amount', 'status', 'created_at')
+        ->where('merchant_id', $merchant_id->id); // Filter by merchant_id
         // Remove this line in production; it's only for debugging.
         // dd($query->get());
 
