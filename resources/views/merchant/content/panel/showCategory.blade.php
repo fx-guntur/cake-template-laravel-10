@@ -13,14 +13,9 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Data Produk</h6>
-            <div class="btn-group">
-            <a href="{{ route('merchant.show-product.create') }}" class="btn btn-success">
-                <i class="fas fa-plus"></i> Tambah Produk
-            </a>
             <a href="{{ route('merchant.show-product.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i> Tambah Kategori
             </a>
-            </div>
         </div>
 
         <div class="card-body">
@@ -28,12 +23,8 @@
                 <table class="table table-bordered" id="products-table" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Nama Produk</th>
                             <th>Kategori</th>
-                            <th>Harga</th>
-                            <th>Deskripsi</th>
-                            <th>Status</th>
-                            <th>Dibuat Pada</th>
+                            <th>Total</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -50,27 +41,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editProductModalLabel">Edit Product</h5>
+                <h5 class="modal-title" id="editProductModalLabel">Edit Category</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="editProductForm">
                     <input type="hidden" id="productId">
                     <div class="mb-3">
-                        <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName">
-                    </div>
-                    <div class="mb-3">
                         <label for="category" class="form-label">Category</label>
                         <input type="selection" class="form-control" id="category">
-                    </div>
-                    <div class="mb-3">
-                        <label for="productPrice" class="form-label">Product Price</label>
-                        <input type="text" class="form-control" id="productPrice">
-                    </div>
-                    <div class="mb-3">
-                        <label for="productDescription" class="form-label">Product Description</label>
-                        <textarea class="form-control" id="productDescription"></textarea>
                     </div>
                 </form>
             </div>
@@ -120,32 +99,17 @@
                     return json.data;
                 }
             },
-            columns: [{
-                    data: 'name',
-                    name: 'name'
-                },
+            columns: [
                 {
                     data: 'category',
                     name: 'category'
                 },
                 {
-                    data: 'price',
-                    name: 'price'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
-                    data: 'status',
-                    name: 'status',
+                    data: 'total',
+                    name: 'total',
                     render: function(data) {
                         return data ? 'Active' : 'Inactive';
                     }
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
                 },
                 {
                     data: null,
