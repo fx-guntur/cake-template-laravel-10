@@ -42,7 +42,7 @@
                         <div class="col-lg-12">
                             <div class="row g-4">
                                 @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3">
+                                    <div class="col-md-6 col-lg-4 col-xl-3" onclick="viewDetails('{{ $product->uuid }}')">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
                                                 @if ($product->images->isNotEmpty())
@@ -110,3 +110,12 @@
     </div>
 </div>
 <!-- Fruits Shop End-->
+
+<script>
+    const productionShowRoute = "{{ route('public.product.show', ':uuid') }}";
+
+    function viewDetails(uuid) {
+        const url = productionShowRoute.replace(':uuid', uuid);
+        window.location.href = url; // Redirect to the product detail page
+    }
+</script>

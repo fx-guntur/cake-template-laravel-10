@@ -4,7 +4,9 @@
         <h1 class="mb-0">Fresh Organic Vegetables</h1>
         <div class="owl-carousel vegetable-carousel justify-content-center">
             @foreach ($products as $product)
-                <div class="border border-primary rounded position-relative vesitable-item">
+                <div class="border border-primary rounded position-relative vesitable-item" 
+                     onclick="viewDetails('{{ $product->uuid }}')" 
+                     style="cursor: pointer; text-decoration: none; color: inherit;">
                     <div class="vesitable-img">
                         @if ($product->images->isNotEmpty())
                             <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}"
@@ -22,8 +24,9 @@
                         <p>{{ $product->description }}</p>
                         <div class="d-flex justify-content-between flex-lg-wrap">
                             <p class="text-dark fs-5 fw-bold mb-0">{{ $product->price }}</p>
-                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -32,3 +35,12 @@
     </div>
 </div>
 <!-- Vegetable Shop End -->
+
+<script>
+    const productionShowRoute = "{{ route('public.product.show', ':uuid') }}";
+
+    function viewDetails(uuid) {
+        const url = productionShowRoute.replace(':uuid', uuid);
+        window.location.href = url; // Redirect to the product detail page
+    }
+</script>

@@ -4,6 +4,7 @@ use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\ContactController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ItemDetailController;
+use App\Http\Controllers\Customer\ProductCardController;
 use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\Customer\ShopController;
 use App\Http\Controllers\Customer\TestimonialController;
@@ -33,6 +34,7 @@ Route::group([
     Route::resource('detail', ItemDetailController::class);
     Route::resource('shop', ShopController::class);
     Route::resource('testimonial', TestimonialController::class);
+    Route::resource('product', ProductCardController::class);
 }
 
 );
