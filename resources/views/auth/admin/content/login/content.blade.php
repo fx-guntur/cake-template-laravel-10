@@ -16,15 +16,18 @@
                 <h1>Sign In</h1>
                 <p>Persiapkan diri untuk masa depan yang penuh dengan bintang</p>
             </div>
+
+            <!-- Menampilkan error dari validasi -->
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
-                    </ul>   
+                    </ul>
                 </div>
             @endif
+
             <form action="{{ route('admin.auth.store') }}" method="POST">
                 @csrf
                 <div class="input-group border-primary">
@@ -51,23 +54,38 @@
         </section>
     </main>
 
+    <!-- SweetAlert2 Success -->
     @if (session('success'))
         <script>
             window.onload = function() {
-                swal("Success", "Test Success Message", "success");
+                Swal.fire({
+                    title: 'Success!',
+                    text: "{{ session('success') }}", // Pesan sukses dari session
+                    icon: 'success', // Ikon SweetAlert2 bawaan untuk sukses
+                    confirmButtonText: 'OK'
+                }).then(function() {
+                    window.location.href = "{{ route('admin.dashboard') }}"; // Redirect setelah sukses
+                });
             };
         </script>
     @endif
 
+    <!-- SweetAlert2 Error -->
     @if (session('error'))
         <script>
             window.onload = function() {
-                swal("Error", "Test Error Message", "error");
+                Swal.fire({
+                    title: 'Oops...',
+                    text: "{{ session('error') }}", // Pesan error dari session
+                    icon: 'error',  // Ikon bawaan untuk error
+                    confirmButtonText: 'OK'
+                });
             };
         </script>
     @endif
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <!-- Library SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
 
     <!-- Script untuk Toggle Show Password -->
