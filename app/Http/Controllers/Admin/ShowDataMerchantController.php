@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -8,71 +7,83 @@ use App\Models\Merchant\Merchant;
 
 class ShowDataMerchantController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Tampilkan daftar merchant (index)
     public function index()
     {
         return view('admin.layout.show-data-merchant');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Tampilkan form create merchant baru (create)
     public function create()
     {
-        //
+        return view('admin.layout.create-merchant'); // Ganti dengan tampilan form
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Simpan merchant baru (store)
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email',
+            'username' => 'required|string|max:255',
+        ]);
+
+        Merchant::create($request->all());
+
+        return redirect()->route('admin.merchant-data.index')->with('success', 'Merchant created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+    // Tampilkan detail merchant tertentu (show)
     public function show(string $id)
     {
-        //
+        $merchant = Merchant::find($id);
+
+        return view('admin.layout.show-merchant', compact('merchant')); // Ganti dengan tampilan detail
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    // Tampilkan form edit merchant (edit)
     public function edit(string $id)
     {
-        //
+        $merchant = Merchant::find($id);
+
+        return view('admin.layout.edit-merchant', compact('merchant')); // Ganti dengan tampilan form edit
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    // Update data merchant yang ada (update)
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'email' => 'required|email',
+            'username' => 'required|string|max:255',
+        ]);
+
+        $merchant = Merchant::find($id);
+        $merchant->update($request->all());
+
+        return response()->json(['success' => 'Merchant updated successfully']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    // Hapus merchant (destroy)
     public function destroy(string $id)
     {
-        //
+        $merchant = Merchant::find($id);
+        $merchant->delete();
+
+        return response()->json(['success' => 'Merchant deleted successfully']);
     }
+
+    // Untuk data DataTables (extra, ini tidak otomatis resource)
     public function getMerchantsData(Request $request)
     {
-        $merchants = Merchant::all(); // Fetch all merchants
+        $merchants = Merchant::all();
 
         return datatables()->of($merchants)
             ->addColumn('action', function ($merchant) {
-                return '<a href="' . route('admin.merchant-data.edit', $merchant->id) . '" class="btn btn-sm btn-primary">Edit</a>
-                        <a href="' . route('admin.merchant-data.destroy', $merchant->id) . '" class="btn btn-sm btn-danger">Delete</a>';
+                return '
+                    <button class="btn btn-sm btn-primary btn-edit" data-id="' . $merchant->id . '" data-email="' . $merchant->email . '" data-username="' . $merchant->username . '">Edit</button>
+                    <button class="btn btn-sm btn-danger btn-delete" data-id="' . $merchant->id . '">Delete</button>
+                ';
             })
-            ->rawColumns(['action'])  // To ensure HTML is rendered
+            ->rawColumns(['action'])
             ->make(true);
     }
 }

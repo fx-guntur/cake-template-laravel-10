@@ -144,8 +144,11 @@ class LoginController extends Controller
      */
     protected function sendFailedLoginResponse(Request $request)
     {
-        throw ValidationException::withMessages([
-            $this->username() => ['Data terkait tidak cocok dengan data yang kami miliki.'], // Custom error message
-        ]);
+        // Simpan pesan error di session
+        session()->flash('error', 'Data terkait tidak cocok dengan data yang kami miliki.');
+
+        // Kembalikan redirect ke halaman login
+        return redirect()->back()->withInput($request->only($this->username(), 'remember'));
     }
+
 }

@@ -175,12 +175,27 @@
                 </ul>
 
             </nav>
-            <!-- End of Topbar -->
-            <script>
-                document.getElementById('logout-link').addEventListener('click', function(event) {
-                    event.preventDefault(); // Prevent the default link action
-                    if (confirm('Are you sure you want to log out?')) {
-                        document.getElementById('logout-form').submit(); // Submit the form
-                    }
-                });
-            </script>
+
+<!-- SweetAlert2 Logout Confirmation -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.getElementById('logout-link').addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default link action
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You will be logged out!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, logout!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit(); // Submit the form
+            }
+        });
+    });
+</script>
