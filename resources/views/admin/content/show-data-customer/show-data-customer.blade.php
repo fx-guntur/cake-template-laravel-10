@@ -36,17 +36,23 @@
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
 
 <script>
+    $(document).ready(function() {
     $('#customerTable').DataTable({
-    "processing": true,
-    "serverSide": true,
-    "ajax": {
-        "url": "{{ route('admin.customer-data.data') }}", // This route should now be properly defined
-        "type": "GET"
-    },
-    "columns": [
-        { "data": "username" },
-        { "data": "email" },
-        { "data": "phone" },
-    ]
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "{{ route('admin.customer-data.data') }}", // Ensure this route is correct
+            "type": "GET",
+            "error": function (xhr, error, thrown) {
+                console.error(xhr.responseText); // Log any error responses to the console
+            }
+        },
+        "columns": [
+            { "data": "username" },
+            { "data": "email" },
+            { "data": "phone" },
+        ]
+    });
 });
+
 </script>

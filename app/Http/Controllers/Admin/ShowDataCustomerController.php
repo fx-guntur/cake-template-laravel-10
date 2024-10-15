@@ -64,9 +64,13 @@ class ShowDataCustomerController extends Controller
     {
         //
     }
-    public function getCustomersData(Request $request)
+
+    public function getCustomerData()
     {
-        $customers = Customer::select(['username', 'email', 'phone']);
-        return DataTables::of($customers)->make(true); // This will return data in the format that DataTables expects
+        $customers = Customer::select('username', 'email', 'phone'); // Modify based on your columns
+
+        return DataTables::of($customers)
+            ->make(true);
     }
+
 }

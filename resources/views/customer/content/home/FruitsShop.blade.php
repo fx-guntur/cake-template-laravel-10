@@ -30,33 +30,35 @@
                         <div class="col-lg-12">
                             <div class="row g-4">
                                 @foreach ($products as $product)
-                                    <div class="col-md-6 col-lg-4 col-xl-3" onclick="viewDetails('{{ $product->uuid }}')">
-                                        <div class="rounded position-relative fruite-item">
-                                            <div class="fruite-img">
-                                                @if ($product->images->isNotEmpty())
-                                                    @foreach ($product->images as $image)
-                                                        <img src="{{ asset('storage/' . $image->path) }}"
-                                                            alt="{{ $product->name }}" class="img-fluid rounded">
-                                                    @endforeach
-                                                @else
-                                                    <p>No image available for this product.</p>
-                                                @endif
-                                            </div>
-                                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
-                                                style="top: 10px; left: 10px;">{{ $product->category_id ? $product->category->category : 'No Category' }}</div>
-                                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                                <h4>{{ $product->name }}</h4>
-                                                <p>{{ $product->description }}</p>
-                                                <div class="d-flex justify-content-between flex-lg-wrap">
-                                                    <p class="text-dark fs-5 fw-bold mb-0">{{ $product->price }}</p>
-                                                    <a href="#"
-                                                        class="btn border border-secondary rounded-pill px-3 text-primary"><i
-                                                            class="fa fa-shopping-bag me-2 text-primary"></i> Add to
-                                                        cart</a>
-                                                </div>
+                                <div class="col-md-6 col-lg-4 col-xl-3" onclick="viewDetails('{{ $product->uuid }}')">
+                                    <div class="rounded position-relative fruite-item h-100 d-flex flex-column">
+                                        <div class="fruite-img overflow-hidden d-flex justify-content-center align-items-center" style="height: 200px;">
+                                            @if ($product->images->isNotEmpty())
+                                                @foreach ($product->images as $image)
+                                                    <img src="{{ asset('storage/' . $image->path) }}" alt="{{ $product->name }}"
+                                                         class="img-fluid rounded h-100 w-100 object-fit-cover">
+                                                @endforeach
+                                            @else
+                                                <p>No image available for this product.</p>
+                                            @endif
+                                        </div>
+                                        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                             style="top: 10px; left: 10px;">
+                                             {{ $product->category_id ? $product->category->category : 'No Category' }}
+                                        </div>
+                                        <div class="p-4 border border-secondary border-top-0 rounded-bottom mt-auto">
+                                            <h4>{{ $product->name }}</h4>
+                                            <p>{{ $product->description }}</p>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-dark fs-5 fw-bold mb-0">{{ $product->price }}</p>
+                                                <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                                    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+
                                 @endforeach
                             </div>
                         </div>

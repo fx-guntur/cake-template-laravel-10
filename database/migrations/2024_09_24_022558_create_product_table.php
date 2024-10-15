@@ -15,6 +15,7 @@ return new class extends Migration
             $table->integer('id', true);
             $table->string('uuid', 36);
             $table->integer('merchant_id')->index('fk__merchants_product');
+            $table->integer('category_id')->index('fk_product_product_category');
             $table->string('name')->default('');
             $table->double('price', null, 0)->default(0);
             $table->text('description')->nullable();
