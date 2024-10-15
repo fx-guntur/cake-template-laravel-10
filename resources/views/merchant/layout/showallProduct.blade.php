@@ -2,4 +2,5 @@
 @section('title', 'merchant')
 @section('content')
 @include('merchant.content.panel.showallProduct')
+@include('merchant.content.category.create')
 @endsection

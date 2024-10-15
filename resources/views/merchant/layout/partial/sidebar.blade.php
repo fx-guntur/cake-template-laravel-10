@@ -73,8 +73,8 @@
             <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <a class="collapse-item" href={{route("merchant.show-product.index")}}>Lihat Produk</a>
-                    <a class="collapse-item" href={{route("merchant.show-product.index")}}>Lihat Kategori</a>
-                    <a class="collapse-item" href={{route("merchant.add-catalog.index")}}>Tambah Produk</a>
+                    <a class="collapse-item" href={{route("merchant.show-category.index")}}>Lihat Kategori</a>
+                    <a class="collapse-item" href={{route("merchant.show-product.create")}}>Tambah Produk</a>
                 </div>
             </div>
         </li>

@@ -24,6 +24,16 @@
                     </div>
 
                     <div class="row mb-3">
+                        <!-- Category Field -->
+                        <div class="col-md-6">
+                            <label for="categoryOption" class="form-label">Category</label>
+                            <select class="form-control" name="category_id" id="categoryOption" required>
+                                <option value="" disabled selected>Select a category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->category }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <!-- Image Field -->
                         <div class="col-md-6">
                             <label for="image" class="form-label">Image</label>
@@ -57,10 +67,9 @@
 </main>
 <!-- ======= End of Main Content ======= -->
 <script>
-    document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+    document.querySelector('.custom-file-input').addEventListener('change', function(e) {
         var fileName = document.getElementById("image").files[0].name;
         var nextSibling = e.target.nextElementSibling;
         nextSibling.innerText = fileName;
     });
 </script>
-

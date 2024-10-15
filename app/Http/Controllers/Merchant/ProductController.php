@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Merchant\Merchant;
+use App\Models\Product\ProductCategories;
 use App\Models\Product\ProductImage;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.showallProduct');
+        $categories = ProductCategories::all();
+        return view('merchant.layout.showallProduct', compact('categories'));
     }
 
     /**
@@ -26,7 +28,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('merchant.layout.add-catalog');
+        $categories = ProductCategories::all();
+        return view('merchant.layout.add-catalog', compact('categories'));
     }
 
     /**
@@ -42,6 +45,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'required|string',
+            'category_id' => 'required|integer|exists:product_categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -53,6 +57,7 @@ class ProductController extends Controller
         $product->price = $request->input('price');
         $product->description = $request->input('description');
         $product->is_active = 1;
+        $product->category_id = $request->input('category_id');
 
         // Save the product instance
         $product->save();
@@ -106,11 +111,13 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
+            'category_id' => 'required|integer|exists:product_categories,id', // Ensure it exists
         ]);
 
         // Find the product by UUID
         $product = Product::where('uuid', $uuid)->firstOrFail();
         $product->name = $validatedData['name'];
+        $product->category_id = $validatedData['category_id'];
         $product->price = $validatedData['price'];
         $product->description = $validatedData['description'];
 
@@ -119,7 +126,6 @@ class ProductController extends Controller
 
         return response()->json(['success' => 'Product updated successfully.']);
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -136,7 +142,16 @@ class ProductController extends Controller
      */
     public function getData(Request $request)
     {
-        $query = Product::select('uuid', 'name', 'price', 'description', 'is_active as status', 'created_at');
+        $query = Product::select(
+            'product.uuid',
+            'product.name',
+            'product.price',
+            'product.description',
+            'product.is_active as status',
+            'product.created_at',
+            'product_categories.category as category_name' // Select category name
+        )
+            ->join('product_categories', 'product.category_id', '=', 'product_categories.id'); // Join categories table
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
                 return '<a href="/merchant/product/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>

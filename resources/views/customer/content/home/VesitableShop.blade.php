@@ -4,20 +4,20 @@
         <h1 class="mb-0">Fresh Organic Vegetables</h1>
         <div class="owl-carousel vegetable-carousel justify-content-center">
             @foreach ($products as $product)
-                <div class="border border-primary rounded position-relative vesitable-item" 
-                     onclick="viewDetails('{{ $product->uuid }}')" 
-                     style="cursor: pointer; text-decoration: none; color: inherit;">
+                <div class="border border-primary rounded position-relative vesitable-item"
+                    onclick="viewDetails('{{ $product->uuid }}')"
+                    style="cursor: pointer; text-decoration: none; color: inherit;">
                     <div class="vesitable-img">
                         @if ($product->images->isNotEmpty())
-                            <img src="{{ asset('storage/' . $product->images->first()->path) }}" alt="{{ $product->name }}"
-                                class="img-fluid w-100 rounded-top">
+                            <img src="{{ asset('storage/' . $product->images->first()->path) }}"
+                                alt="{{ $product->name }}" class="img-fluid w-100 rounded-top">
                         @else
                             <p>No image available for this product.</p>
                         @endif
                     </div>
-                    <div class="text-white bg-primary px-3 py-1 rounded position-absolute"
-                        style="top: 10px; right: 10px;">
-                        Vegetable
+                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                        style="top: 10px; left: 10px;">
+                        {{ $product->category_id ? $product->category->category : 'No Category' }}
                     </div>
                     <div class="p-4 rounded-bottom">
                         <h4>{{ $product->name }}</h4>

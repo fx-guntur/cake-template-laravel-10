@@ -14,12 +14,13 @@
         <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-primary">Data Produk</h6>
             <div class="btn-group">
-            <a href="{{ route('merchant.show-product.create') }}" class="btn btn-success">
-                <i class="fas fa-plus"></i> Tambah Produk
-            </a>
-            <a href="{{ route('merchant.show-product.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> Tambah Kategori
-            </a>
+                <a href="{{ route('merchant.show-product.create') }}" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Tambah Produk
+                </a>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#createCategoryModal">
+                    <i class="fas fa-plus"></i> Tambah Kategori
+                </button>
             </div>
         </div>
 
@@ -58,19 +59,24 @@
                     <input type="hidden" id="productId">
                     <div class="mb-3">
                         <label for="productName" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="productName">
+                        <input type="text" class="form-control" id="productName" name="name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="category" class="form-label">Category</label>
-                        <input type="selection" class="form-control" id="category">
+                        <label for="categoryOption" class="form-label">Category</label>
+                        <select class="form-control" name="category_id" id="categoryOption" required>
+                            <option value="" disabled selected>Select a category</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="productPrice" class="form-label">Product Price</label>
-                        <input type="text" class="form-control" id="productPrice">
+                        <input type="text" class="form-control" id="productPrice" name="price" required>
                     </div>
                     <div class="mb-3">
                         <label for="productDescription" class="form-label">Product Description</label>
-                        <textarea class="form-control" id="productDescription"></textarea>
+                        <textarea class="form-control" id="productDescription" name="description"></textarea>
                     </div>
                 </form>
             </div>
@@ -125,8 +131,8 @@
                     name: 'name'
                 },
                 {
-                    data: 'category',
-                    name: 'category'
+                    data: 'category_name',
+                    name: 'category_name'
                 },
                 {
                     data: 'price',
@@ -166,11 +172,12 @@
         // Handle Edit Button Click
         $('body').on('click', '.editProduct', function() {
             var productUUID = $(this).data('uuid');
-            const urlEdit = productionEditRoute.replace(':uuid', productUUID)
+            const urlEdit = productionEditRoute.replace(':uuid', productUUID);
             $.get(urlEdit)
                 .done(function(data) {
                     $('#productId').val(data.uuid);
                     $('#productName').val(data.name);
+                    $('#categoryOption').val(data.category_id); // Ensure this matches your DB field
                     $('#productPrice').val(data.price);
                     $('#productDescription').val(data.description);
                     $('#editProductModal').modal('show');
@@ -188,6 +195,7 @@
             var updatedData = {
                 name: $('#productName').val(),
                 price: $('#productPrice').val(),
+                category_id: $('#categoryOption').val(), // Fix key to match validation
                 description: $('#productDescription').val()
             };
 

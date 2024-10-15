@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product\Product;
+use App\Models\Product\ProductCategories;
 use App\Models\Product\ProductImage;
 use Illuminate\Http\Request;
 

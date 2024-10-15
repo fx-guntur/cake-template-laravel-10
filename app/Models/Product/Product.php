@@ -17,6 +17,7 @@ class Product extends Model
     protected $fillable = [
         'uuid',          // If you're using UUIDs
         'merchant_id',
+        'category_id',
         'name',
         'price',
         'description',
@@ -48,9 +49,14 @@ class Product extends Model
         //     }
         // });
     }
-    public function images()
-{
-    return $this->hasMany(ProductImage::class);
-}
 
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(ProductCategories::class, 'category_id'); // Ensure 'category_id' matches your actual foreign key
+    }
 }
