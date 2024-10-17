@@ -97,17 +97,10 @@
                     name: 'created_at'
                 },
                 {
-                    data: null,
+                    data: 'action',
                     name: 'action',
                     orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        const url = productionShowRoute.replace(':uuid', row.uuid)
-                        return `
-                            <a href="${url}" class="btn btn-info btn-sm">Lihat Detail</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-uuid="${row.uuid}">Edit</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-uuid="${row.uuid}">Delete</a>`;
-                    }
+                    searchable: false
                 }
             ]
         });

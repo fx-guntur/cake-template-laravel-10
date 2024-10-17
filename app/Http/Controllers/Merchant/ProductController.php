@@ -23,7 +23,7 @@ class ProductController extends Controller
         return view('merchant.layout.app', [
             'pageTitle' => 'List Product',
             'viewType' => 'merchantProducts',
-            'categories' => $categories, 
+            'categories' => $categories,
         ]);
     }
 
@@ -36,7 +36,7 @@ class ProductController extends Controller
         return view('merchant.layout.app', [
             'pageTitle' => 'Add Product',
             'viewType' => 'addCatalog',
-            'categories' => $categories, 
+            'categories' => $categories,
         ]);
     }
 
@@ -90,12 +90,20 @@ class ProductController extends Controller
      */
     public function show(string $uuid)
     {
-        $product = Product::with('images')->where('uuid', $uuid)->firstOrFail();
-        return view('merchant.layout.app', [
-            'pageTitle' => 'Details Product',
-            'viewType' => 'productDetails',
-            'product' => $product, 
-        ]);  
+        $product = Product::with('category', 'images')->where('uuid', $uuid)->firstOrFail();
+
+        $data = [
+            'name' => $product->name,
+            'price' => $product->price,
+            'description' => $product->description,
+            'category_id' => $product->category_id,
+            'category_name' => $product->category ? $product->category->category : 'No Category',
+            'images' => $product->images->map(function ($image) {
+                return ['path' => $image->path];
+            })->toArray()
+        ];
+
+        return response()->json($data);
     }
 
     public function images()
@@ -166,10 +174,11 @@ class ProductController extends Controller
             ->join('product_categories', 'product.category_id', '=', 'product_categories.id'); // Join categories table
         return datatables()->of($query)
             ->addColumn('action', function ($row) {
-                return '<a href="/merchant/product/' . $row->uuid . '" class="btn btn-info btn-sm">Lihat Detail</a>
+                return '<button type="button" class="btn btn-sm btn-info" data-uuid="' . $row->uuid . '" id="viewProductBtn">Show Details</button>
                         <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-uuid="' . $row->uuid . '">Edit</a>
                         <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-uuid="' . $row->uuid . '">Delete</a>';
             })
+            ->rawColumns(['action'])
             ->editColumn('status', function ($row) {
                 return $row->status ? 'Active' : 'Inactive';
             })

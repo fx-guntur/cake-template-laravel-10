@@ -4,10 +4,6 @@
 
 @section('content')
     @switch($viewType)
-        @case('productDetails')
-            @include('merchant.content.detail-product.index', ['product' => $product])
-            @break
-
         @case('merchantTransactions')
             @include('merchant.content.transaction.index')
             @include('merchant.content.transaction.show')
@@ -23,6 +19,7 @@
             @include('merchant.content.product.index')
             @include('merchant.content.product.edit')
             @include('merchant.content.category.create')
+            @include('merchant.content.product.show')
             @break
 
         @case('customerProfile')
