@@ -1,4 +1,3 @@
-
 <!-- Edit Merchant Modal -->
 <div class="modal fade" id="editMerchantModal" tabindex="-1" role="dialog" aria-labelledby="editMerchantModalLabel"
     aria-hidden="true">
@@ -11,8 +10,6 @@
             </div>
             <div class="modal-body">
                 <form id="editMerchantForm">
-                    @csrf
-                    @method('PUT') <!-- Pastikan untuk menambahkan method PUT -->
                     <input type="hidden" id="merchantId">
                     <div class="form-group">
                         <label for="editEmail">Email</label>
@@ -22,8 +19,11 @@
                         <label for="editUsername">Username</label>
                         <input type="text" class="form-control" id="editUsername" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveChanges">Save changes</button>
+                </div>
             </div>
         </div>
     </div>
@@ -41,51 +41,60 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
 <script>
-     // Handle edit button click
-     $(document).on('click', '.btn-edit', function() {
-        var merchantId = $(this).data('id');
-        var email = $(this).data('email');
-        var username = $(this).data('username');
+    const merchantEditRoute = "{{ route('admin.merchant-data.edit', ':uuid') }}";
+    const merchantUpdateRoute = "{{ route('admin.merchant-data.update', ':uuid') }}";
+    const merchantDestroyRoute = "{{ route('admin.merchant-data.destroy', ':uuid') }}";
 
-        // Set values in the modal
-        $('#merchantId').val(merchantId);
-        $('#editEmail').val(email);
-        $('#editUsername').val(username);
+    // Handle edit button click
+    $('body').on('click', '.btn-edit', function() {
+        var merchantUuid = $(this).data('uuid');
+        const urlEdit = merchantEditRoute.replace(':uuid', merchantUuid)
 
-        // Show the modal
-        $('#editMerchantModal').modal('show');
+        $.get(urlEdit)
+            .done(function(data) {
+                $('#merchantId').val(data.uuid);
+                $('#editEmail').val(data.email); // Make sure this matches the input ID
+                $('#editUsername').val(data.username);
+                $('#editMerchantModal').modal('show'); // Show the modal explicitly
+            })
+            .fail(function(xhr) {
+                console.error(xhr); // Log the entire response for debugging
+                Swal.fire('Error!', 'Failed to load category details.', 'error');
+            });
     });
 
-    // Handle form submit for editing
-    $('#editMerchantForm').on('submit', function(e) {
-        e.preventDefault();
-        var id = $('#merchantId').val();
-        var email = $('#editEmail').val();
-        var username = $('#editUsername').val();
+    // Handle Save Changes Button Click
+    // Handle Save Changes Button Click
+    $('#saveChanges').on('click', function() {
+        var merchantUUID = $('#merchantId').val();
+        const urlUpdate = merchantUpdateRoute.replace(':uuid', merchantUUID);
+
+        var updatedData = {
+            email: $('#editEmail').val(), // This should match the input ID
+            username: $('#editUsername').val(),
+        };
 
         $.ajax({
-            url: '/admin/merchant-data/' + id,
-            method: 'PUT',
-            data: {
-                _token: $('input[name="_token"]').val(),
-                email: email,
-                username: username
-            },
+            url: urlUpdate,
+            type: 'PUT',
+            data: updatedData,
             success: function(response) {
                 $('#editMerchantModal').modal('hide');
                 $('#merchantTable').DataTable().ajax.reload();
-                Swal.fire('Success', 'Merchant updated successfully', 'success');
+                Swal.fire('Updated!', 'Merchant has been updated.', 'success');
             },
             error: function(xhr) {
-                // Handle error response
-                Swal.fire('Error', 'Something went wrong!', 'error');
+                console.error(xhr); // Log the error response
+                Swal.fire('Error!', 'There was an error updating the merchant: ' + (xhr.responseJSON
+                    .message || 'Unknown error'), 'error');
             }
         });
     });
 
     // Handle delete button click with SweetAlert2
     $(document).on('click', '.btn-delete', function() {
-        var merchantId = $(this).data('id');
+        var merchantUUID = $(this).data('uuid');
+        const urlDestroy = merchantDestroyRoute.replace(':uuid', merchantUUID);
 
         Swal.fire({
             title: 'Are you sure?',
@@ -98,21 +107,21 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: '/admin/merchant-data/' + merchantId,
+                    url: urlDestroy,
                     method: 'DELETE',
                     data: {
-                        _token: $('input[name="_token"]').val()
+                        _token: $('meta[name="csrf-token"]').attr(
+                            'content') // Include CSRF token here
                     },
                     success: function(response) {
                         $('#merchantTable').DataTable().ajax.reload();
                         Swal.fire('Deleted!', 'Merchant has been deleted.', 'success');
                     },
                     error: function(xhr) {
-                        // Handle error response
                         Swal.fire('Error', 'Something went wrong!', 'error');
                     }
                 });
             }
         });
     });
-    </script>
+</script>

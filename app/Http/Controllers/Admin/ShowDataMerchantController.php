@@ -4,72 +4,89 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Merchant\Merchant;
+use Illuminate\Support\Facades\Session;
 
 class ShowDataMerchantController extends Controller
 {
     // Tampilkan daftar merchant (index)
     public function index()
     {
-        return view('admin.layout.show-data-merchant');
+        return view('admin.layout.app', [
+            'pageTitle' => 'Customer Data',
+            'viewType' => 'adminMerchantData',
+        ]);
     }
 
     // Tampilkan form create merchant baru (create)
     public function create()
     {
-        return view('admin.layout.create-merchant'); // Ganti dengan tampilan form
+        return view('admin.layout.app', [
+            'pageTitle' => 'Customer Data',
+            'viewType' => 'adminAddMerchant',
+        ]);
     }
 
     // Simpan merchant baru (store)
     public function store(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'username' => 'required|string|max:255',
+            'username' => 'required|string|unique:customers|max:255',
+            'email' => 'required|string|email|unique:customers|max:255',
+            'password' => 'required|string|min:5|confirmed',
         ]);
 
-        Merchant::create($request->all());
+        // Create a new customer account
+        $merchant = new Merchant();
+        $merchant->username = $request->username;
+        $merchant->email = $request->email;
+        $merchant->password = bcrypt($request->password); // Hash the password
+        $merchant->save(); // UUID is generated here automatically
 
-        return redirect()->route('admin.merchant-data.index')->with('success', 'Merchant created successfully.');
+        Session::flash('success', 'Registration Successful! You can now log in.');
+        return redirect()->route('admin.add-merchant.index');
     }
 
     // Tampilkan detail merchant tertentu (show)
     public function show(string $id)
     {
-        $merchant = Merchant::find($id);
-
-        return view('admin.layout.show-merchant', compact('merchant')); // Ganti dengan tampilan detail
+       
     }
 
     // Tampilkan form edit merchant (edit)
-    public function edit(string $id)
+    public function edit(string $uuid)
     {
-        $merchant = Merchant::find($id);
-
-        return view('admin.layout.edit-merchant', compact('merchant')); // Ganti dengan tampilan form edit
+        $merchant = Merchant::where('uuid', $uuid)->firstOrFail();
+        return response()->json($merchant);
     }
 
     // Update data merchant yang ada (update)
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $uuid)
     {
-        $request->validate([
+        $validatedData = $request->validate([
             'email' => 'required|email',
             'username' => 'required|string|max:255',
         ]);
 
-        $merchant = Merchant::find($id);
-        $merchant->update($request->all());
+        // Find the product by UUID
+        $merchant_data = Merchant::where('uuid', $uuid)->firstOrFail();
+        $merchant_data->email = $validatedData['email'];
+        $merchant_data->username = $validatedData['username'];
 
-        return response()->json(['success' => 'Merchant updated successfully']);
+        // Save the changes to the database
+        $merchant_data->save();
+
+        return response()->json(['success' => 'Merchant updated successfully.']);
+    
     }
 
     // Hapus merchant (destroy)
-    public function destroy(string $id)
+    public function destroy(string $uuid)
     {
-        $merchant = Merchant::find($id);
+        $merchant = Merchant::where('uuid', $uuid)->firstOrFail();
         $merchant->delete();
 
-        return response()->json(['success' => 'Merchant deleted successfully']);
-    }
+        return response()->json(['success' => 'Merchant deleted successfully.']);
+     }
 
     // Untuk data DataTables (extra, ini tidak otomatis resource)
     public function getMerchantsData(Request $request)

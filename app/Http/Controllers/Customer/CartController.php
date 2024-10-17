@@ -12,7 +12,10 @@ class CartController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.cart');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Shopping Cart',
+            'viewType' => 'customerCart',
+        ]);
     }
 
     /**

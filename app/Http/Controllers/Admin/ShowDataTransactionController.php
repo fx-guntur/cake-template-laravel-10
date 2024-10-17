@@ -15,7 +15,10 @@ class ShowDataTransactionController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.show-data-transaction');
+        return view('admin.layout.app', [
+            'pageTitle' => 'Transaction Data',
+            'viewType' => 'adminTransactionData',
+        ]);
     }
 
     /**

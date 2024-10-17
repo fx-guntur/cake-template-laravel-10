@@ -12,7 +12,10 @@ class TestimonialController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.testimonial');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Testimoni',
+            'viewType' => 'customerTestimonial',
+        ]);
     }
 
     /**

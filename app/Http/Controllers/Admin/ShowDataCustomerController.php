@@ -14,7 +14,10 @@ class ShowDataCustomerController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.show-data-customer');
+        return view('admin.layout.app', [
+            'pageTitle' => 'Customer Data',
+            'viewType' => 'adminCustomerData',
+        ]);
     }
 
     /**

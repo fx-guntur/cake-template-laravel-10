@@ -12,7 +12,10 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.shop');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Product Catalog',
+            'viewType' => 'customerCatalog',
+        ]);
     }
 
     /**

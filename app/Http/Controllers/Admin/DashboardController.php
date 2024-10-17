@@ -30,8 +30,9 @@ class DashboardController extends Controller
         // Fetch the total number of registered merchants
         $registeredMerchants = Merchant::count();
 
-        // Pass all data to the view
-        return view('admin.layout.dashboard', [
+        return view('admin.layout.app', [
+            'pageTitle' => 'Admin Panel',
+            'viewType' => 'adminDashboard',
             'monthlyEarnings' => $monthlyEarnings,
             'annualEarnings' => $annualEarnings,
             'registeredUsers' => $registeredUsers,

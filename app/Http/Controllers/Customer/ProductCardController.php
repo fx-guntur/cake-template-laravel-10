@@ -40,7 +40,11 @@ class ProductCardController extends Controller
     public function show(string $uuid)
     {
         $product = Product::with('images')->where('uuid', $uuid)->firstOrFail();
-        return view('customer.layout.shop-detail', compact('product'));
+        return view('customer.layout.app', [
+            'pageTitle' => 'Product Detail',
+            'viewType' => 'customerProductDetail',
+            'product' => $product,
+        ]);
     }
 
     public function images()

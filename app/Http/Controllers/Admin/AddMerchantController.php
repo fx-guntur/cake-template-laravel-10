@@ -14,7 +14,10 @@ class AddMerchantController extends Controller
      */
     public function index()
     {
-        return view('admin.layout.daftar-merchant');
+        return view('admin.layout.app', [
+            'pageTitle' => 'Add Merchant',
+            'viewType' => 'adminAddMerchant',
+        ]);
     }
 
     /**
@@ -22,7 +25,7 @@ class AddMerchantController extends Controller
      */
     public function create()
     {
-        return view('layouts.admin.panel.daftar-merchant.pages.daftar-merchant');
+
     }
 
     /**

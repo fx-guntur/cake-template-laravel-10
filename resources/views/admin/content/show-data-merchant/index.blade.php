@@ -1,3 +1,4 @@
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -43,6 +44,12 @@
 <script>
     // Initialize DataTable
     $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
         $('#merchantTable').DataTable({
             "processing": true,
             "serverSide": true,
@@ -50,9 +57,12 @@
                 "url": "{{ route('admin.merchant-data.data') }}",
                 "type": "GET"
             },
-            "columns": [
-                { "data": "email" },
-                { "data": "username" },
+            "columns": [{
+                    "data": "email"
+                },
+                {
+                    "data": "username"
+                },
                 {
                     "data": null,
                     "orderable": false,
@@ -60,11 +70,11 @@
                     "render": function(data, type, row) {
                         return `
                             <button class="btn btn-primary btn-edit"
-                                    data-id="${row.id}"
+                                    data-uuid="${row.uuid}"
                                     data-email="${row.email}"
                                     data-username="${row.username}">Edit</button>
                             <button class="btn btn-danger btn-delete"
-                                    data-id="${row.id}">Hapus</button>
+                                    data-uuid="${row.uuid}">Hapus</button>
                         `;
                     }
                 }

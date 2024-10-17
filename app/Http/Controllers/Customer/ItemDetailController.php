@@ -12,7 +12,10 @@ class ItemDetailController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.shop-detail');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Product Detail',
+            'viewType' => 'customerProductDetail',
+        ]);
     }
 
     /**

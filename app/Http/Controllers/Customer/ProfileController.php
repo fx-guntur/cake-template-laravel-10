@@ -16,7 +16,11 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::guard('customer')->user(); // Get the authenticated user
-        return view('customer.layout.profile', compact('user'));
+        return view('customer.layout.app', [
+            'pageTitle' => 'Product Detail',
+            'viewType' => 'customerProfile',
+            'user' => $user,
+        ]);
     }
 
     /**
@@ -24,8 +28,8 @@ class ProfileController extends Controller
      */
     public function edit()
     {
-        $user = Auth::guard('customer')->user(); // Get the authenticated user
-        return view('customer.layout.edit-profile', compact('user'));
+        // $user = Auth::guard('customer')->user(); // Get the authenticated user
+        // return view('customer.layout.edit-profile', compact('user'));
     }
 
     /**

@@ -12,7 +12,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.contact');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Contact Us',
+            'viewType' => 'customerContact',
+        ]);
     }
 
     /**

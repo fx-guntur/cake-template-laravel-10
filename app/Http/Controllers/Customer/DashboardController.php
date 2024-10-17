@@ -19,7 +19,14 @@ class DashboardController extends Controller
             ->limit(6)
             ->get();
 
-        return view('customer.layout.dashboard', compact('products', 'cheap_products', 'categories'));
+            return view('customer.layout.app', [
+                'pageTitle' => 'Dashboard',
+                'viewType' => 'customerDashboard',
+                'products' => $products,
+                'cheap_products' => $cheap_products,
+                'categories' => $categories,
+            ]);
+
     }
 
     public function images()

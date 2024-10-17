@@ -12,7 +12,10 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        return view('customer.layout.checkout');
+        return view('customer.layout.app', [
+            'pageTitle' => 'Checkout',
+            'viewType' => 'customerCheckout',
+        ]);
     }
 
     /**
