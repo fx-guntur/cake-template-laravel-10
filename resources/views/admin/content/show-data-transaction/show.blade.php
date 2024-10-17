@@ -4,7 +4,7 @@ aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="transactionModalLabel">Transaction Details</h5>
-            <button type="button" class="btn-close" aria-label="Close" id="closeModalBtn"></button>
+            <button type="button" class="btn-close" aria-label="Close" data-dismiss="modal"></button>
         </div>
         <div class="modal-body" id="transactionContent">
             <!-- Transaction details will be populated here -->
@@ -58,20 +58,4 @@ $(document).on('click', '#viewTransactionBtn', function() {
         });
 });
 
-// Close modal using native JavaScript
-document.getElementById('closeModalBtn').addEventListener('click', function() {
-    const modal = document.getElementById('transactionModal');
-    modal.style.display = 'none'; // Hide the modal
-    modal.classList.remove('show'); // Remove Bootstrap's show class
-    document.body.classList.remove('modal-open'); // Remove the modal-open class from body
-    document.querySelector('.modal-backdrop').remove(); // Remove the backdrop
-});
-
-document.getElementById('closeModalBtnFooter').addEventListener('click', function() {
-    const modal = document.getElementById('transactionModal');
-    modal.style.display = 'none'; // Hide the modal
-    modal.classList.remove('show'); // Remove Bootstrap's show class
-    document.body.classList.remove('modal-open'); // Remove the modal-open class from body
-    document.querySelector('.modal-backdrop').remove(); // Remove the backdrop
-});
     </script>
