@@ -20,7 +20,11 @@ class ProductController extends Controller
     public function index()
     {
         $categories = ProductCategories::all();
-        return view('merchant.layout.showallProduct', compact('categories'));
+        return view('merchant.layout.app', [
+            'pageTitle' => 'List Product',
+            'viewType' => 'merchantProducts',
+            'categories' => $categories, 
+        ]);
     }
 
     /**
@@ -29,7 +33,11 @@ class ProductController extends Controller
     public function create()
     {
         $categories = ProductCategories::all();
-        return view('merchant.layout.add-catalog', compact('categories'));
+        return view('merchant.layout.app', [
+            'pageTitle' => 'Add Product',
+            'viewType' => 'addCatalog',
+            'categories' => $categories, 
+        ]);
     }
 
     /**
@@ -83,7 +91,11 @@ class ProductController extends Controller
     public function show(string $uuid)
     {
         $product = Product::with('images')->where('uuid', $uuid)->firstOrFail();
-        return view('merchant.layout.viewProduct', compact('product'));
+        return view('merchant.layout.app', [
+            'pageTitle' => 'Details Product',
+            'viewType' => 'productDetails',
+            'product' => $product, 
+        ]);  
     }
 
     public function images()

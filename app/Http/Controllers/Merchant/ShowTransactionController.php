@@ -16,7 +16,10 @@ class ShowTransactionController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.showTransaction');
+        return view('merchant.layout.app', [
+            'pageTitle' => 'List Transaction',
+            'viewType' => 'merchantTransactions',
+        ]);  
     }
 
     /**

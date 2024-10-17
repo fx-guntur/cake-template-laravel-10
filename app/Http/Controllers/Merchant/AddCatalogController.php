@@ -12,7 +12,10 @@ class AddCatalogController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.add-catalog');
+        return view('merchant.layout.app', [
+            'pageTitle' => 'Add Product',
+            'viewType' => 'addCatalog',
+        ]);
     }
 
     /**

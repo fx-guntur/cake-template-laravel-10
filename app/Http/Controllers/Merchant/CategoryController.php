@@ -15,7 +15,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('merchant.layout.showCategory');
+        return view('merchant.layout.app', [
+            'pageTitle' => 'List Category',
+            'viewType' => 'merchantCategories',
+        ]);  
     }
 
     /**

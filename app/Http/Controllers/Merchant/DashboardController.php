@@ -9,6 +9,9 @@ class DashboardController extends Controller
 {
     public function __invoke(Request $request)
     {
-        return view('merchant.layout.dashboard');
+        return view('merchant.layout.app', [
+            'pageTitle' => 'Merchant Panel',
+            'viewType' => 'merchantDashboard',
+        ]);  
     }
 }
