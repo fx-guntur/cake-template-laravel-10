@@ -4,9 +4,6 @@ use App\Http\Controllers\Merchant\AddCatalogController;
 use App\Http\Controllers\Merchant\Auth\LoginController;
 use App\Http\Controllers\Merchant\CategoryController;
 use App\Http\Controllers\Merchant\DashboardController;
-use App\Http\Controllers\Merchant\DeleteCatalogController;
-use App\Http\Controllers\Merchant\ManagementProductController;
-use App\Http\Controllers\Merchant\ProductDetailController;
 use App\Http\Controllers\Merchant\ProfileController;
 use App\Http\Controllers\Merchant\ShowTransactionController;
 use App\Http\Controllers\Merchant\ProductController;
@@ -28,8 +25,6 @@ Route::group(['as' => 'merchant.'], function () {
         Route::get('/', DashboardController::class)->name('dashboard');
         // Resource
         Route::resource('add-catalog', AddCatalogController::class);
-        Route::resource('delete-catalog', DeleteCatalogController::class);
-        Route::resource('management-product', ManagementProductController::class);
         Route::resource('profile', ProfileController::class);
         Route::resource('show-transaction', ShowTransactionController::class);
         Route::resource('show-product', ProductController::class);

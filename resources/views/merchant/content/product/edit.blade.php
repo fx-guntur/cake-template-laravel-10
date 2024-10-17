@@ -1,51 +1,3 @@
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
-<!-- Begin Page Content -->
-<div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Lihat Semua Produk</h1>
-    <p class="mb-4">DataTables is a third-party plugin that is used to generate the demo table below.
-        For more information about DataTables, please visit the
-        <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.
-    </p>
-
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">Data Produk</h6>
-            <div class="btn-group">
-                <a href="{{ route('merchant.show-product.create') }}" class="btn btn-success">
-                    <i class="fas fa-plus"></i> Tambah Produk
-                </a>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                    data-bs-target="#createCategoryModal">
-                    <i class="fas fa-plus"></i> Tambah Kategori
-                </button>
-            </div>
-        </div>
-
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="products-table" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Nama Produk</th>
-                            <th>Kategori</th>
-                            <th>Harga</th>
-                            <th>Deskripsi</th>
-                            <th>Status</th>
-                            <th>Dibuat Pada</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-<!-- /.container-fluid -->
-
 <!-- Edit Product Modal -->
 <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -87,16 +39,6 @@
         </div>
     </div>
 </div>
-
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2024</span>
-        </div>
-    </div>
-</footer>
-
 <!-- Load jQuery, Bootstrap, DataTables, and SweetAlert2 -->
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -107,70 +49,14 @@
     const productionEditRoute = "{{ route('merchant.show-product.edit', ':uuid') }}";
     const productionUpdateRoute = "{{ route('merchant.show-product.update', ':uuid') }}";
     const productionDestroyRoute = "{{ route('merchant.show-product.destroy', ':uuid') }}";
-    // const productionDeleteRoute = "{{ route('merchant.show-transaction.show', ':uuid') }}";
-
     $(document).ready(function() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        // Initialize DataTable
-        $('#products-table').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: '{{ route('merchant.product.getData') }}',
-                dataSrc: function(json) {
-                    return json.data;
-                }
-            },
-            columns: [{
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'category_name',
-                    name: 'category_name'
-                },
-                {
-                    data: 'price',
-                    name: 'price'
-                },
-                {
-                    data: 'description',
-                    name: 'description'
-                },
-                {
-                    data: 'status',
-                    name: 'status',
-                    render: function(data) {
-                        return data ? 'Active' : 'Inactive';
-                    }
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
-                },
-                {
-                    data: null,
-                    name: 'action',
-                    orderable: false,
-                    searchable: false,
-                    render: function(data, type, row) {
-                        const url = productionShowRoute.replace(':uuid', row.uuid)
-                        return `
-                            <a href="${url}" class="btn btn-info btn-sm">Lihat Detail</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-primary editProduct" data-uuid="${row.uuid}">Edit</a>
-                            <a href="javascript:void(0)" class="btn btn-sm btn-danger deleteProduct" data-uuid="${row.uuid}">Delete</a>`;
-                    }
-                }
-            ]
-        });
-
-        // Handle Edit Button Click
-        $('body').on('click', '.editProduct', function() {
+    // Handle Edit Button Click
+    $('body').on('click', '.editProduct', function() {
             var productUUID = $(this).data('uuid');
             const urlEdit = productionEditRoute.replace(':uuid', productUUID);
             $.get(urlEdit)
@@ -186,9 +72,8 @@
                     Swal.fire('Error!', 'Failed to load product details.', 'error');
                 });
         });
-
-        // Handle Save Changes Button Click
-        $('#saveChanges').on('click', function() {
+         // Handle Save Changes Button Click
+         $('#saveChanges').on('click', function() {
             var productUUID = $('#productId').val();
             const urlUpdate = productionUpdateRoute.replace(':uuid', productUUID);
 
@@ -248,4 +133,4 @@
             });
         });
     });
-</script>
+    </script>
